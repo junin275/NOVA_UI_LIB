@@ -51,8 +51,8 @@ local function loadModule(name)
 	code = code:gsub("local ([%w_]+) = require%(script%.Parent%.([%w_]+)%)", "local %1 = NovaUI.%2")
 	code = code:gsub("local ([%w_]+) = require%(script%.Parent%.Parent%.Core%.([%w_]+)%)", "local %1 = NovaUI.%2")
 	code = code:gsub("local ([%w_]+) = require%(script%.Parent%.Parent%.Services%.([%w_]+)%)", "local %1 = NovaUI.%2")
-	code = code:gsub("^return [%w_]+", "NovaUI." .. name)
-	code = code:gsub("\nreturn [%w_]+", "\nNovaUI." .. name)
+	code = code:gsub("^return ([%w_]+)", "NovaUI.%1 = %1")
+	code = code:gsub("\nreturn ([%w_]+)", "\nNovaUI.%1 = %1")
 	return code
 end
 

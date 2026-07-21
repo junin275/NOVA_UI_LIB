@@ -277,7 +277,7 @@ function Utility:GetRelativePosition(instance, ancestor)
 	return Vector2.new(pos.X - ancPos.X, pos.Y - ancPos.Y)
 end
 
-NovaUI.Utility
+NovaUI.Utility = Utility
 
 
 -- ThemeManager
@@ -472,7 +472,7 @@ function ThemeManager:ApplyToInstance(instance, properties)
 	end
 end
 
-NovaUI.ThemeManager
+NovaUI.ThemeManager = ThemeManager
 
 
 -- AnimationManager
@@ -728,7 +728,7 @@ function AnimationManager:Rotate(instance, angle, duration, style)
 	}, style or "Smooth", "Out", duration or 0.3)
 end
 
-NovaUI.AnimationManager
+NovaUI.AnimationManager = AnimationManager
 
 
 -- IconManager
@@ -885,7 +885,7 @@ function IconManager:ClearCustomIcons()
 	CUSTOM_ICONS = {}
 end
 
-NovaUI.IconManager
+NovaUI.IconManager = IconManager
 
 
 -- SoundManager
@@ -1013,7 +1013,7 @@ function SoundManager:Cleanup()
 	end
 end
 
-NovaUI.SoundManager
+NovaUI.SoundManager = SoundManager
 
 
 -- ConfigService
@@ -1183,7 +1183,7 @@ function ConfigService:Destroy()
 	self.CurrentConfig = nil
 end
 
-NovaUI.ConfigService
+NovaUI.ConfigService = ConfigService
 
 
 -- DragService
@@ -1398,7 +1398,7 @@ function DragService:Cleanup()
 	ACTIVE_DRAGS = {}
 end
 
-NovaUI.DragService
+NovaUI.DragService = DragService
 
 
 -- Window
@@ -1852,7 +1852,7 @@ function Window:GetWindows()
 	return Windows
 end
 
-NovaUI.Window
+NovaUI.Window = Window
 
 
 -- Tab
@@ -2122,7 +2122,7 @@ function Tab:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Tab
+NovaUI.Tab = Tab
 
 
 -- Section
@@ -2436,7 +2436,7 @@ function Section:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Section
+NovaUI.Section = Section
 
 
 -- Button
@@ -2639,7 +2639,7 @@ function Button:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Button
+NovaUI.Button = Button
 
 
 -- Toggle
@@ -2850,7 +2850,7 @@ function Toggle:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Toggle
+NovaUI.Toggle = Toggle
 
 
 -- Slider
@@ -3114,7 +3114,7 @@ function Slider:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Slider
+NovaUI.Slider = Slider
 
 
 -- Dropdown
@@ -3430,7 +3430,7 @@ function Dropdown:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Dropdown
+NovaUI.Dropdown = Dropdown
 
 
 -- MultiDropdown
@@ -3812,7 +3812,7 @@ function MultiDropdown:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.MultiDropdown
+NovaUI.MultiDropdown = MultiDropdown
 
 
 -- TextBox
@@ -3968,7 +3968,7 @@ function TextBox:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.TextBox
+NovaUI.TextBox = TextBox
 
 
 -- Keybind
@@ -4187,7 +4187,7 @@ function Keybind:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Keybind
+NovaUI.Keybind = Keybind
 
 
 -- Label
@@ -4279,7 +4279,7 @@ function Label:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Label
+NovaUI.Label = Label
 
 
 -- Paragraph
@@ -4383,7 +4383,7 @@ function Paragraph:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Paragraph
+NovaUI.Paragraph = Paragraph
 
 
 -- ColorPicker
@@ -4765,7 +4765,7 @@ function ColorPicker:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.ColorPicker
+NovaUI.ColorPicker = ColorPicker
 
 
 -- Notification
@@ -4974,7 +4974,7 @@ function Notification:ClearAll()
 	end
 end
 
-NovaUI.Notification
+NovaUI.Notification = Notification
 
 
 -- Dialog
@@ -5201,7 +5201,7 @@ function Dialog:Close(callback)
 	end)
 end
 
-NovaUI.Dialog
+NovaUI.Dialog = Dialog
 
 
 -- Tooltip
@@ -5374,7 +5374,7 @@ function Tooltip:Destroy()
 	self.Tooltip:Destroy()
 end
 
-NovaUI.Tooltip
+NovaUI.Tooltip = Tooltip
 
 
 -- Separator
@@ -5477,7 +5477,7 @@ function Separator:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Separator
+NovaUI.Separator = Separator
 
 
 -- ProgressBar
@@ -5636,7 +5636,7 @@ function ProgressBar:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.ProgressBar
+NovaUI.ProgressBar = ProgressBar
 
 
 -- SearchBar
@@ -5793,7 +5793,7 @@ function SearchBar:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.SearchBar
+NovaUI.SearchBar = SearchBar
 
 
 -- MiniConsole
@@ -5994,7 +5994,7 @@ function MiniConsole:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.MiniConsole
+NovaUI.MiniConsole = MiniConsole
 
 
 -- Image
@@ -6091,7 +6091,7 @@ function Image:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Image
+NovaUI.Image = Image
 
 
 -- Icon
@@ -6193,7 +6193,7 @@ function Icon:Destroy()
 	self.Container:Destroy()
 end
 
-NovaUI.Icon
+NovaUI.Icon = Icon
 
 
 -- LoadingScreen
@@ -6369,7 +6369,7 @@ function LoadingScreen:Destroy()
 	end
 end
 
-NovaUI.LoadingScreen
+NovaUI.LoadingScreen = LoadingScreen
 
 
 -- FloatingButton
@@ -6525,7 +6525,7 @@ function FloatingButton:Destroy()
 	self.ScreenGui:Destroy()
 end
 
-NovaUI.FloatingButton
+NovaUI.FloatingButton = FloatingButton
 
 
 -- Watermark
@@ -6722,7 +6722,7 @@ function Watermark:Destroy()
 	end
 end
 
-NovaUI.Watermark
+NovaUI.Watermark = Watermark
 
 
 -- FPSCounter
@@ -6867,7 +6867,7 @@ function FPSCounter:Destroy()
 	end
 end
 
-NovaUI.FPSCounter
+NovaUI.FPSCounter = FPSCounter
 
 
 
