@@ -27,12 +27,13 @@ function Watermark:New(options)
 	self.ShowFPS = options.ShowFPS or false
 	self.Position = options.Position or UDim2.new(0, 14, 0, 10)
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	local screenGui = Instance.new("ScreenGui")

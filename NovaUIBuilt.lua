@@ -701,9 +701,7 @@ function AnimationManager:GlowEffect(frame, color, intensity, duration)
 
 	glow.Parent = frame
 
-	local blur = Instance.new("BlurEffect")
-	blur.Size = 8
-	blur.Parent = glow
+	-- glow uses image transparency fallback (BlurEffect only works in Lighting)
 
 	frame.MouseEnter:Connect(function()
 		glow.Visible = true
@@ -1432,11 +1430,24 @@ function Window:New(options)
 	screenGui.IgnoreGuiInset = true
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	local success, err = pcall(function()
-		screenGui.Parent = CoreGui
-	end)
-	if not success then
-		screenGui.Parent = Player:WaitForChild("PlayerGui")
+	local parentGui = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parentGui) == "table" and typeof(parentGui) == "Instance" then
+		screenGui.Parent = parentGui
+	else
+		local success, err = pcall(function()
+			screenGui.Parent = CoreGui
+		end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			if plrGui then
+				screenGui.Parent = plrGui
+			else
+				plrGui = Player:WaitForChild("PlayerGui", 5)
+				if plrGui then
+					screenGui.Parent = plrGui
+				end
+			end
+		end
 	end
 
 	self.ScreenGui = screenGui
@@ -4787,15 +4798,16 @@ local NOTIFICATION_HEIGHT = 60
 local NOTIFICATION_GAP = 8
 
 local function getNotificationParent()
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
-	local notifGui = parent:FindFirstChild("Nova_Notifications")
+	local notifGui = parent and parent:FindFirstChild("Nova_Notifications")
 	if not notifGui then
 		notifGui = Instance.new("ScreenGui")
 		notifGui.Name = "Nova_Notifications"
@@ -5003,12 +5015,13 @@ function Dialog:New(options)
 	self.Callback = options.Callback or function() end
 	self.Type = options.Type or "Info"
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	local screenGui = Instance.new("ScreenGui")
@@ -6221,12 +6234,13 @@ function LoadingScreen:New(options)
 	self.AutoDestroy = options.AutoDestroy or false
 	self.Duration = options.Duration or 0
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	if ACTIVE_LOADING then
@@ -6402,12 +6416,13 @@ function FloatingButton:New(options)
 	self.Callback = options.Callback or function() end
 	self.Tooltip = options.Tooltip or nil
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	local screenGui = Instance.new("ScreenGui")
@@ -6558,12 +6573,13 @@ function Watermark:New(options)
 	self.ShowFPS = options.ShowFPS or false
 	self.Position = options.Position or UDim2.new(0, 14, 0, 10)
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	local screenGui = Instance.new("ScreenGui")
@@ -6753,12 +6769,13 @@ function FPSCounter:New(options)
 	self.ShowGraph = options.ShowGraph or false
 	self.UpdateInterval = options.UpdateInterval or 0.5
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	local screenGui = Instance.new("ScreenGui")

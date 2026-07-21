@@ -28,11 +28,24 @@ function Window:New(options)
 	screenGui.IgnoreGuiInset = true
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	local success, err = pcall(function()
-		screenGui.Parent = CoreGui
-	end)
-	if not success then
-		screenGui.Parent = Player:WaitForChild("PlayerGui")
+	local parentGui = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parentGui) == "table" and typeof(parentGui) == "Instance" then
+		screenGui.Parent = parentGui
+	else
+		local success, err = pcall(function()
+			screenGui.Parent = CoreGui
+		end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			if plrGui then
+				screenGui.Parent = plrGui
+			else
+				plrGui = Player:WaitForChild("PlayerGui", 5)
+				if plrGui then
+					screenGui.Parent = plrGui
+				end
+			end
+		end
 	end
 
 	self.ScreenGui = screenGui

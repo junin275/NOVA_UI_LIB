@@ -223,9 +223,7 @@ function AnimationManager:GlowEffect(frame, color, intensity, duration)
 
 	glow.Parent = frame
 
-	local blur = Instance.new("BlurEffect")
-	blur.Size = 8
-	blur.Parent = glow
+	-- glow uses image transparency fallback (BlurEffect only works in Lighting)
 
 	frame.MouseEnter:Connect(function()
 		glow.Visible = true

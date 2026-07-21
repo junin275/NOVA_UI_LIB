@@ -22,12 +22,13 @@ function LoadingScreen:New(options)
 	self.AutoDestroy = options.AutoDestroy or false
 	self.Duration = options.Duration or 0
 
-	local parent
-	local success, err = pcall(function()
-		parent = CoreGui
-	end)
-	if not success then
-		parent = Player:WaitForChild("PlayerGui")
+	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
+	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
+		local success, err = pcall(function() parent = CoreGui end)
+		if not success then
+			local plrGui = Player:FindFirstChild("PlayerGui")
+			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+		end
 	end
 
 	if ACTIVE_LOADING then
