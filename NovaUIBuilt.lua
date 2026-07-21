@@ -7005,7 +7005,6 @@ function NovaUI:Unload()
 	end
 end
 
-return NovaUI
 
 
 return NovaUI

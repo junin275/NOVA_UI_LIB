@@ -87,7 +87,7 @@ local init = read("Init.lua")
 init = init:gsub("local NovaUI = {}", "")
 init = init:gsub("NovaUI%.[%w_]+ = require%([^\n]+%)", "")
 init = init:gsub("local [%w_]+ = require%([^\n]+%)", "")
-init = init:gsub("^return NovaUI", "")
+init = init:gsub("\nreturn NovaUI", "")
 table.insert(out, init)
 
 table.insert(out, "\nreturn NovaUI")
