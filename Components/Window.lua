@@ -47,8 +47,11 @@ function Window:New(options)
 	self.ScreenGui = screenGui
 	self.Options = options
 	self.Title = options.Title or "Nova UI"
-	self.Size = options.Size or UDim2.new(0, 680, 0, 480)
-	self.Position = options.Position or UDim2.new(0.5, -340, 0.5, -240)
+	local viewport = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize or Vector2.new(800, 600)
+	local defaultW = math.min(680, viewport.X - 40)
+	local defaultH = math.min(480, viewport.Y - 60)
+	self.Size = options.Size or UDim2.new(0, defaultW, 0, defaultH)
+	self.Position = options.Position or UDim2.new(0.5, -defaultW / 2, 0.5, -defaultH / 2)
 	self.MinSize = options.MinSize or Vector2.new(400, 320)
 	self.Theme = options.Theme or "Default"
 	self.Icon = options.Icon or nil
@@ -255,7 +258,6 @@ function Window:New(options)
 	contentArea.ScrollBarImageColor3 = ThemeManager:GetColor("ScrollBar")
 	contentArea.ScrollBarImageTransparency = 0.6
 	contentArea.CanvasSize = UDim2.new(0, 0, 0, 0)
-	contentArea.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	contentArea.ScrollingDirection = Enum.ScrollingDirection.Y
 	contentArea.ElasticBehavior = Enum.ElasticBehavior.Never
 	contentArea.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
@@ -280,10 +282,13 @@ function Window:New(options)
 
 	self._contentLayout = contentLayout
 
-	contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	local function updateCanvas()
 		local size = contentLayout.AbsoluteContentSize
 		contentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
-	end)
+	end
+
+	contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvas)
+	task.spawn(updateCanvas)
 
 	DragService:MakeDraggable(mainFrame, titleBar, {
 		ConstrainToScreen = true,

@@ -74,7 +74,6 @@ function Tab:New(window, options)
 	container.BorderSizePixel = 0
 	container.ScrollBarThickness = 0
 	container.CanvasSize = UDim2.new(0, 0, 0, 0)
-	container.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	container.ScrollingDirection = Enum.ScrollingDirection.Y
 	container.ElasticBehavior = Enum.ElasticBehavior.Never
 	container.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
