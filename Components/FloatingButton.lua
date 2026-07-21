@@ -27,14 +27,20 @@ function FloatingButton:New(options)
 	self.Callback = options.Callback or function() end
 	self.Tooltip = options.Tooltip or nil
 
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	local parent = findParent()
 
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "Nova_FAB_" .. self.Name

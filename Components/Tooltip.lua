@@ -7,7 +7,7 @@ local Utility = require(script.Parent.Parent.Core.Utility)
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
+local Mouse = Player and Player:GetMouse()
 
 local ACTIVE_TOOLTIP = nil
 

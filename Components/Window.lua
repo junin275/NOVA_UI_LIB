@@ -3,7 +3,7 @@ Window.__index = Window
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
+local Mouse = Player and Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
@@ -28,25 +28,20 @@ function Window:New(options)
 	screenGui.IgnoreGuiInset = true
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	local parentGui = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parentGui) == "table" and typeof(parentGui) == "Instance" then
-		screenGui.Parent = parentGui
-	else
-		local success, err = pcall(function()
-			screenGui.Parent = CoreGui
-		end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			if plrGui then
-				screenGui.Parent = plrGui
-			else
-				plrGui = Player:WaitForChild("PlayerGui", 5)
-				if plrGui then
-					screenGui.Parent = plrGui
-				end
-			end
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	screenGui.Parent = findParent()
 
 	self.ScreenGui = screenGui
 	self.Options = options

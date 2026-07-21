@@ -1405,7 +1405,7 @@ Window.__index = Window
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
+local Mouse = Player and Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
@@ -1430,25 +1430,20 @@ function Window:New(options)
 	screenGui.IgnoreGuiInset = true
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	local parentGui = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parentGui) == "table" and typeof(parentGui) == "Instance" then
-		screenGui.Parent = parentGui
-	else
-		local success, err = pcall(function()
-			screenGui.Parent = CoreGui
-		end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			if plrGui then
-				screenGui.Parent = plrGui
-			else
-				plrGui = Player:WaitForChild("PlayerGui", 5)
-				if plrGui then
-					screenGui.Parent = plrGui
-				end
-			end
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	screenGui.Parent = findParent()
 
 	self.ScreenGui = screenGui
 	self.Options = options
@@ -4798,15 +4793,20 @@ local NOTIFICATION_HEIGHT = 60
 local NOTIFICATION_GAP = 8
 
 local function getNotificationParent()
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
-
+	local parent = findParent()
 	local notifGui = parent and parent:FindFirstChild("Nova_Notifications")
 	if not notifGui then
 		notifGui = Instance.new("ScreenGui")
@@ -5015,14 +5015,20 @@ function Dialog:New(options)
 	self.Callback = options.Callback or function() end
 	self.Type = options.Type or "Info"
 
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	local parent = findParent()
 
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "Nova_Dialog"
@@ -5227,7 +5233,7 @@ Tooltip.__index = Tooltip
 
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
-local Mouse = Player:GetMouse()
+local Mouse = Player and Player:GetMouse()
 
 local ACTIVE_TOOLTIP = nil
 
@@ -6234,14 +6240,20 @@ function LoadingScreen:New(options)
 	self.AutoDestroy = options.AutoDestroy or false
 	self.Duration = options.Duration or 0
 
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	local parent = findParent()
 
 	if ACTIVE_LOADING then
 		ACTIVE_LOADING:Destroy()
@@ -6416,14 +6428,20 @@ function FloatingButton:New(options)
 	self.Callback = options.Callback or function() end
 	self.Tooltip = options.Tooltip or nil
 
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	local parent = findParent()
 
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "Nova_FAB_" .. self.Name
@@ -6573,14 +6591,20 @@ function Watermark:New(options)
 	self.ShowFPS = options.ShowFPS or false
 	self.Position = options.Position or UDim2.new(0, 14, 0, 10)
 
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	local parent = findParent()
 
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "Nova_Watermark"
@@ -6769,14 +6793,20 @@ function FPSCounter:New(options)
 	self.ShowGraph = options.ShowGraph or false
 	self.UpdateInterval = options.UpdateInterval or 0.5
 
-	local parent = (type(gethui) == "function" and pcall(gethui) or nil)
-	if type(parent) ~= "table" or typeof(parent) ~= "Instance" then
-		local success, err = pcall(function() parent = CoreGui end)
-		if not success then
-			local plrGui = Player:FindFirstChild("PlayerGui")
-			parent = plrGui or Player:WaitForChild("PlayerGui", 5)
+	local function findParent()
+		local ok, g = pcall(gethui)
+		if ok and typeof(g) == "Instance" then return g end
+		local ok2, c = pcall(function() return CoreGui end)
+		if ok2 and c then return c end
+		if Player then
+			local pg = Player:FindFirstChild("PlayerGui")
+			if pg then return pg end
+			local ok3, pg2 = pcall(function() return Player:WaitForChild("PlayerGui", 5) end)
+			if ok3 and pg2 then return pg2 end
 		end
+		return nil
 	end
+	local parent = findParent()
 
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "Nova_FPS"
