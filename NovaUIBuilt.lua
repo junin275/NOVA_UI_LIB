@@ -497,7 +497,6 @@ local EASING_DIRECTIONS = {
 	In = Enum.EasingDirection.In,
 	Out = Enum.EasingDirection.Out,
 	InOut = Enum.EasingDirection.InOut,
-	OutIn = Enum.EasingDirection.OutIn,
 }
 
 function AnimationManager:GetTweenInfo(style, direction, duration)
