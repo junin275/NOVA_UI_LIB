@@ -284,99 +284,170 @@ NovaUI.Utility = Utility
 local ThemeManager = {}
 ThemeManager.__index = ThemeManager
 
+local DARK_BG = Color3.fromRGB(10, 10, 15)
+local DARK_SURFACE = Color3.fromRGB(16, 16, 22)
+local DARK_SURFACE_ALT = Color3.fromRGB(22, 22, 30)
+local DARK_BORDER = Color3.fromRGB(30, 30, 42)
+local DARK_BORDER_LIGHT = Color3.fromRGB(38, 38, 52)
+
 local DEFAULT_PALETTE = {
-	Background = Color3.fromRGB(13, 13, 15),
-	Surface = Color3.fromRGB(20, 20, 24),
-	SurfaceAlt = Color3.fromRGB(26, 26, 32),
-	Border = Color3.fromRGB(35, 35, 42),
-	BorderLight = Color3.fromRGB(42, 42, 53),
-	Accent = Color3.fromRGB(79, 124, 255),
-	AccentSecondary = Color3.fromRGB(118, 89, 255),
-	TextPrimary = Color3.fromRGB(255, 255, 255),
-	TextSecondary = Color3.fromRGB(154, 154, 176),
-	TextMuted = Color3.fromRGB(90, 90, 112),
-	Success = Color3.fromRGB(76, 175, 132),
+	Background = DARK_BG,
+	Surface = DARK_SURFACE,
+	SurfaceAlt = DARK_SURFACE_ALT,
+	Border = DARK_BORDER,
+	BorderLight = DARK_BORDER_LIGHT,
+	Accent = Color3.fromRGB(108, 92, 231),
+	AccentSecondary = Color3.fromRGB(162, 108, 255),
+	TextPrimary = Color3.fromRGB(230, 230, 245),
+	TextSecondary = Color3.fromRGB(155, 155, 175),
+	TextMuted = Color3.fromRGB(90, 90, 115),
+	Success = Color3.fromRGB(0, 200, 117),
 	Warning = Color3.fromRGB(255, 184, 76),
-	Danger = Color3.fromRGB(255, 107, 107),
-	Info = Color3.fromRGB(79, 124, 255),
+	Danger = Color3.fromRGB(255, 82, 82),
+	Info = Color3.fromRGB(84, 160, 255),
 	Overlay = Color3.fromRGB(0, 0, 0),
 	Shadow = Color3.fromRGB(0, 0, 0),
+	HeaderText = Color3.fromRGB(200, 200, 220),
+	Divider = Color3.fromRGB(28, 28, 38),
+	ToggleActive = Color3.fromRGB(108, 92, 231),
+	ToggleInactive = Color3.fromRGB(38, 38, 50),
+	InputBackground = Color3.fromRGB(18, 18, 26),
+	ScrollBar = Color3.fromRGB(108, 92, 231),
+}
+
+local LIGHT_BG = Color3.fromRGB(245, 245, 250)
+local LIGHT_SURFACE = Color3.fromRGB(255, 255, 255)
+local LIGHT_SURFACE_ALT = Color3.fromRGB(238, 238, 245)
+local LIGHT_BORDER = Color3.fromRGB(210, 210, 220)
+local LIGHT_BORDER_LIGHT = Color3.fromRGB(220, 220, 230)
+
+local LIGHT_PALETTE = {
+	Background = LIGHT_BG,
+	Surface = LIGHT_SURFACE,
+	SurfaceAlt = LIGHT_SURFACE_ALT,
+	Border = LIGHT_BORDER,
+	BorderLight = LIGHT_BORDER_LIGHT,
+	Accent = Color3.fromRGB(108, 92, 231),
+	AccentSecondary = Color3.fromRGB(162, 108, 255),
+	TextPrimary = Color3.fromRGB(20, 20, 35),
+	TextSecondary = Color3.fromRGB(90, 90, 115),
+	TextMuted = Color3.fromRGB(140, 140, 160),
+	Success = Color3.fromRGB(0, 180, 100),
+	Warning = Color3.fromRGB(230, 160, 50),
+	Danger = Color3.fromRGB(230, 60, 60),
+	Info = Color3.fromRGB(60, 140, 240),
+	Overlay = Color3.fromRGB(0, 0, 0),
+	Shadow = Color3.fromRGB(0, 0, 0),
+	HeaderText = Color3.fromRGB(40, 40, 60),
+	Divider = Color3.fromRGB(210, 210, 220),
+	ToggleActive = Color3.fromRGB(108, 92, 231),
+	ToggleInactive = Color3.fromRGB(180, 180, 195),
+	InputBackground = Color3.fromRGB(232, 232, 240),
+	ScrollBar = Color3.fromRGB(108, 92, 231),
 }
 
 local DARK_THEMES = {
 	Default = DEFAULT_PALETTE,
 	Amethyst = {
-		Background = Color3.fromRGB(13, 13, 15),
-		Surface = Color3.fromRGB(20, 20, 24),
-		SurfaceAlt = Color3.fromRGB(26, 26, 32),
-		Border = Color3.fromRGB(35, 35, 42),
-		BorderLight = Color3.fromRGB(42, 42, 53),
+		Background = Color3.fromRGB(10, 10, 18),
+		Surface = Color3.fromRGB(16, 16, 26),
+		SurfaceAlt = Color3.fromRGB(22, 22, 34),
+		Border = Color3.fromRGB(35, 30, 45),
+		BorderLight = Color3.fromRGB(42, 38, 55),
 		Accent = Color3.fromRGB(156, 101, 217),
 		AccentSecondary = Color3.fromRGB(217, 101, 189),
-		TextPrimary = Color3.fromRGB(255, 255, 255),
-		TextSecondary = Color3.fromRGB(154, 154, 176),
-		TextMuted = Color3.fromRGB(90, 90, 112),
+		TextPrimary = Color3.fromRGB(230, 230, 245),
+		TextSecondary = Color3.fromRGB(155, 155, 176),
+		TextMuted = Color3.fromRGB(95, 90, 115),
 		Success = Color3.fromRGB(76, 175, 132),
 		Warning = Color3.fromRGB(255, 184, 76),
 		Danger = Color3.fromRGB(255, 107, 107),
 		Info = Color3.fromRGB(156, 101, 217),
 		Overlay = Color3.fromRGB(0, 0, 0),
 		Shadow = Color3.fromRGB(0, 0, 0),
+		HeaderText = Color3.fromRGB(200, 200, 220),
+		Divider = Color3.fromRGB(28, 28, 42),
+		ToggleActive = Color3.fromRGB(156, 101, 217),
+		ToggleInactive = Color3.fromRGB(38, 38, 52),
+		InputBackground = Color3.fromRGB(18, 18, 28),
+		ScrollBar = Color3.fromRGB(156, 101, 217),
 	},
 	Emerald = {
-		Background = Color3.fromRGB(13, 15, 13),
-		Surface = Color3.fromRGB(20, 24, 20),
-		SurfaceAlt = Color3.fromRGB(26, 32, 26),
-		Border = Color3.fromRGB(35, 42, 35),
-		BorderLight = Color3.fromRGB(42, 53, 42),
+		Background = Color3.fromRGB(10, 14, 10),
+		Surface = Color3.fromRGB(16, 22, 16),
+		SurfaceAlt = Color3.fromRGB(22, 30, 22),
+		Border = Color3.fromRGB(30, 42, 30),
+		BorderLight = Color3.fromRGB(38, 52, 38),
 		Accent = Color3.fromRGB(38, 185, 128),
 		AccentSecondary = Color3.fromRGB(38, 128, 185),
-		TextPrimary = Color3.fromRGB(255, 255, 255),
-		TextSecondary = Color3.fromRGB(154, 176, 154),
-		TextMuted = Color3.fromRGB(90, 112, 90),
+		TextPrimary = Color3.fromRGB(230, 245, 230),
+		TextSecondary = Color3.fromRGB(155, 176, 155),
+		TextMuted = Color3.fromRGB(90, 115, 90),
 		Success = Color3.fromRGB(76, 175, 132),
 		Warning = Color3.fromRGB(255, 184, 76),
 		Danger = Color3.fromRGB(255, 107, 107),
 		Info = Color3.fromRGB(38, 185, 128),
 		Overlay = Color3.fromRGB(0, 0, 0),
 		Shadow = Color3.fromRGB(0, 0, 0),
+		HeaderText = Color3.fromRGB(200, 220, 200),
+		Divider = Color3.fromRGB(28, 42, 28),
+		ToggleActive = Color3.fromRGB(38, 185, 128),
+		ToggleInactive = Color3.fromRGB(38, 52, 38),
+		InputBackground = Color3.fromRGB(18, 26, 18),
+		ScrollBar = Color3.fromRGB(38, 185, 128),
 	},
 	Ruby = {
-		Background = Color3.fromRGB(15, 13, 13),
-		Surface = Color3.fromRGB(24, 20, 20),
-		SurfaceAlt = Color3.fromRGB(32, 26, 26),
-		Border = Color3.fromRGB(42, 35, 35),
-		BorderLight = Color3.fromRGB(53, 42, 42),
+		Background = Color3.fromRGB(18, 10, 10),
+		Surface = Color3.fromRGB(26, 16, 16),
+		SurfaceAlt = Color3.fromRGB(34, 22, 22),
+		Border = Color3.fromRGB(45, 30, 30),
+		BorderLight = Color3.fromRGB(55, 38, 38),
 		Accent = Color3.fromRGB(217, 65, 65),
 		AccentSecondary = Color3.fromRGB(185, 65, 101),
-		TextPrimary = Color3.fromRGB(255, 255, 255),
-		TextSecondary = Color3.fromRGB(176, 154, 154),
-		TextMuted = Color3.fromRGB(112, 90, 90),
+		TextPrimary = Color3.fromRGB(245, 230, 230),
+		TextSecondary = Color3.fromRGB(176, 155, 155),
+		TextMuted = Color3.fromRGB(115, 90, 90),
 		Success = Color3.fromRGB(76, 175, 132),
 		Warning = Color3.fromRGB(255, 184, 76),
 		Danger = Color3.fromRGB(255, 107, 107),
 		Info = Color3.fromRGB(217, 65, 65),
 		Overlay = Color3.fromRGB(0, 0, 0),
 		Shadow = Color3.fromRGB(0, 0, 0),
+		HeaderText = Color3.fromRGB(220, 200, 200),
+		Divider = Color3.fromRGB(42, 28, 28),
+		ToggleActive = Color3.fromRGB(217, 65, 65),
+		ToggleInactive = Color3.fromRGB(52, 38, 38),
+		InputBackground = Color3.fromRGB(26, 18, 18),
+		ScrollBar = Color3.fromRGB(217, 65, 65),
 	},
 	Sapphire = {
-		Background = Color3.fromRGB(13, 13, 15),
-		Surface = Color3.fromRGB(20, 20, 24),
-		SurfaceAlt = Color3.fromRGB(26, 26, 32),
-		Border = Color3.fromRGB(35, 35, 42),
-		BorderLight = Color3.fromRGB(42, 42, 53),
+		Background = Color3.fromRGB(10, 10, 18),
+		Surface = Color3.fromRGB(16, 16, 26),
+		SurfaceAlt = Color3.fromRGB(22, 22, 34),
+		Border = Color3.fromRGB(30, 30, 45),
+		BorderLight = Color3.fromRGB(38, 38, 55),
 		Accent = Color3.fromRGB(45, 156, 219),
 		AccentSecondary = Color3.fromRGB(45, 101, 219),
-		TextPrimary = Color3.fromRGB(255, 255, 255),
-		TextSecondary = Color3.fromRGB(154, 154, 176),
-		TextMuted = Color3.fromRGB(90, 90, 112),
+		TextPrimary = Color3.fromRGB(230, 230, 245),
+		TextSecondary = Color3.fromRGB(155, 155, 176),
+		TextMuted = Color3.fromRGB(90, 95, 115),
 		Success = Color3.fromRGB(76, 175, 132),
 		Warning = Color3.fromRGB(255, 184, 76),
 		Danger = Color3.fromRGB(255, 107, 107),
 		Info = Color3.fromRGB(45, 156, 219),
 		Overlay = Color3.fromRGB(0, 0, 0),
 		Shadow = Color3.fromRGB(0, 0, 0),
+		HeaderText = Color3.fromRGB(200, 200, 220),
+		Divider = Color3.fromRGB(28, 28, 42),
+		ToggleActive = Color3.fromRGB(45, 156, 219),
+		ToggleInactive = Color3.fromRGB(38, 38, 52),
+		InputBackground = Color3.fromRGB(18, 18, 28),
+		ScrollBar = Color3.fromRGB(45, 156, 219),
 	},
+}
+
+local LIGHT_THEMES = {
+	Default = LIGHT_PALETTE,
 }
 
 ThemeManager.CurrentTheme = "Default"
@@ -384,6 +455,7 @@ ThemeManager.CurrentPalette = {}
 ThemeManager.CustomPalettes = {}
 ThemeManager.Listeners = {}
 ThemeManager.AnimateOnChange = true
+ThemeManager.IsDark = true
 
 function ThemeManager:GetColor(key)
 	local palette = self.CurrentPalette
@@ -396,6 +468,9 @@ end
 function ThemeManager:GetThemeList()
 	local list = {}
 	for name in DARK_THEMES do
+		table.insert(list, name)
+	end
+	for name in LIGHT_THEMES do
 		table.insert(list, name)
 	end
 	for name in self.CustomPalettes do
@@ -418,12 +493,13 @@ function ThemeManager:AddTheme(name, palette)
 end
 
 function ThemeManager:ApplyTheme(name)
-	local palette = DARK_THEMES[name] or self.CustomPalettes[name]
+	local palette = DARK_THEMES[name] or LIGHT_THEMES[name] or self.CustomPalettes[name]
 	if not palette then
 		return
 	end
 	self.CurrentTheme = name
 	self.CurrentPalette = palette
+	self.IsDark = (DARK_THEMES[name] ~= nil)
 	self:NotifyListeners()
 end
 
@@ -449,26 +525,8 @@ function ThemeManager:OnChange(callback)
 end
 
 function ThemeManager:NotifyListeners()
-	for _, callback in ipairs(self.Listeners) do
+	for _, callback in self.Listeners do
 		pcall(callback, self.CurrentPalette, self.AnimateOnChange)
-	end
-end
-
-function ThemeManager:GetCSSColor(key)
-	local color = self:GetColor(key)
-	return Color3.new(color.R, color.G, color.B)
-end
-
-function ThemeManager:ApplyToInstance(instance, properties)
-	for propName, colorKey in properties do
-		local color = self:GetColor(colorKey)
-		if color then
-			if propName == "BackgroundColor3" or propName == "BorderColor3" or propName == "TextColor3" then
-				instance[propName] = color
-			elseif propName == "BackgroundTransparency" then
-				instance.BackgroundTransparency = color
-			end
-		end
 	end
 end
 
@@ -1408,6 +1466,7 @@ local Mouse = Player and Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
 
 
 
@@ -1447,19 +1506,29 @@ function Window:New(options)
 	self.ScreenGui = screenGui
 	self.Options = options
 	self.Title = options.Title or "Nova UI"
-	self.Size = options.Size or UDim2.new(0, 640, 0, 440)
-	self.Position = options.Position or UDim2.new(0.5, -320, 0.5, -220)
-	self.MinSize = options.MinSize or Vector2.new(360, 280)
+	self.Size = options.Size or UDim2.new(0, 680, 0, 480)
+	self.Position = options.Position or UDim2.new(0.5, -340, 0.5, -240)
+	self.MinSize = options.MinSize or Vector2.new(400, 320)
 	self.Theme = options.Theme or "Default"
 	self.Icon = options.Icon or nil
 	self.Resizable = options.Resizable or false
 	self.ShowFPS = options.ShowFPS or false
+	self.SidebarWidth = options.SidebarWidth or 50
 	self._minimized = false
 	self._maximized = false
 	self._previousSize = nil
 	self._previousPosition = nil
 	self.Tabs = {}
 	self._currentTab = nil
+
+	local modalBackdrop = Instance.new("Frame")
+	modalBackdrop.Name = "ModalBackdrop"
+	modalBackdrop.Size = UDim2.new(1, 0, 1, 0)
+	modalBackdrop.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	modalBackdrop.BackgroundTransparency = 1
+	modalBackdrop.BorderSizePixel = 0
+	modalBackdrop.ZIndex = 0
+	modalBackdrop.Parent = screenGui
 
 	local mainFrame = Instance.new("Frame")
 	mainFrame.Name = "MainWindow"
@@ -1470,78 +1539,68 @@ function Window:New(options)
 	mainFrame.ClipsDescendants = true
 	mainFrame.Parent = screenGui
 
+	AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0}, "Smooth", "Out", 0.4)
+
 	self.MainFrame = mainFrame
 
-	Utility:CreateCorner(mainFrame, 10)
+	Utility:CreateCorner(mainFrame, 12)
 
-	local outerGlow = Instance.new("ImageLabel")
-	outerGlow.Name = "OuterGlow"
-	outerGlow.BackgroundTransparency = 1
-	outerGlow.BorderSizePixel = 0
-	outerGlow.Size = UDim2.new(1, 40, 1, 40)
-	outerGlow.Position = UDim2.new(-0.5, -20, -0.5, -20)
-	outerGlow.ZIndex = mainFrame.ZIndex - 1
-	outerGlow.Image = "rbxassetid://1316045217"
-	outerGlow.ImageColor3 = Color3.fromRGB(0, 0, 0)
-	outerGlow.ImageTransparency = 0.85
-	outerGlow.ScaleType = Enum.ScaleType.Slice
-	outerGlow.SliceCenter = Rect.new(10, 10, 118, 118)
-	outerGlow.Parent = mainFrame
+	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.5, 1)
 
-	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.4, 1)
+	local shadowFrame = Instance.new("ImageLabel")
+	shadowFrame.Name = "Shadow"
+	shadowFrame.BackgroundTransparency = 1
+	shadowFrame.BorderSizePixel = 0
+	shadowFrame.Size = UDim2.new(1, 60, 1, 60)
+	shadowFrame.Position = UDim2.new(-0.5, -30, -0.5, -30)
+	shadowFrame.ZIndex = mainFrame.ZIndex - 2
+	shadowFrame.Image = "rbxassetid://1316045217"
+	shadowFrame.ImageColor3 = Color3.fromRGB(0, 0, 0)
+	shadowFrame.ImageTransparency = 0.78
+	shadowFrame.ScaleType = Enum.ScaleType.Slice
+	shadowFrame.SliceCenter = Rect.new(10, 10, 118, 118)
+	shadowFrame.Parent = mainFrame
 
 	local titleBar = Instance.new("Frame")
 	titleBar.Name = "TitleBar"
-	titleBar.Size = UDim2.new(1, 0, 0, 42)
+	titleBar.Size = UDim2.new(1, 0, 0, 44)
 	titleBar.Position = UDim2.new(0, 0, 0, 0)
 	titleBar.BackgroundColor3 = ThemeManager:GetColor("SurfaceAlt")
 	titleBar.BorderSizePixel = 0
 	titleBar.Parent = mainFrame
 
-	Utility:CreateCorner(titleBar, 10)
+	Utility:CreateCorner(titleBar, 12)
 	Utility:CreateStroke(titleBar, ThemeManager:GetColor("Border"), 0.3, 1)
 
-	local titleBarBottom = Instance.new("Frame")
-	titleBarBottom.Name = "TitleBarBottom"
-	titleBarBottom.Size = UDim2.new(1, 0, 0, 0)
-	titleBarBottom.Position = UDim2.new(0, 0, 1, 0)
-	titleBarBottom.BackgroundColor3 = ThemeManager:GetColor("Border")
-	titleBarBottom.BorderSizePixel = 0
-	titleBarBottom.Parent = titleBar
+	local titleBarFill = Instance.new("Frame")
+	titleBarFill.Name = "TitleBarFill"
+	titleBarFill.Size = UDim2.new(0, 0, 0, 1)
+	titleBarFill.Position = UDim2.new(0, 0, 1, 0)
+	titleBarFill.BackgroundColor3 = ThemeManager:GetColor("Divider")
+	titleBarFill.BorderSizePixel = 0
+	titleBarFill.Parent = titleBar
 
 	self.TitleBar = titleBar
-	self._titleBarBottom = titleBarBottom
 
-	local accentLine = Instance.new("Frame")
-	accentLine.Name = "AccentLine"
-	accentLine.Size = UDim2.new(0, 0, 0, 2)
-	accentLine.Position = UDim2.new(0, 0, 1, -2)
-	accentLine.BackgroundColor3 = ThemeManager:GetColor("Accent")
-	accentLine.BorderSizePixel = 0
-	accentLine.Parent = titleBar
-
-	AnimationManager:CreateTween(accentLine, {Size = UDim2.new(1, 0, 0, 2)}, "Soft", "Out", 0.6)
-
-	local iconLabel = nil
+	local iconLabel
 	if self.Icon then
-		iconLabel = IconManager:CreateIconLabel(titleBar, self.Icon, UDim2.new(0, 18, 0, 18), ThemeManager:GetColor("TextPrimary"))
+		iconLabel = IconManager:CreateIconLabel(titleBar, self.Icon, UDim2.new(0, 20, 0, 20), ThemeManager:GetColor("Accent"))
 		if iconLabel then
-			iconLabel.Position = UDim2.new(0, 14, 0.5, -9)
+			iconLabel.Position = UDim2.new(0, 14, 0.5, -10)
 			iconLabel.ZIndex = titleBar.ZIndex + 1
 		end
 	end
 
 	local titleLabel = Instance.new("TextLabel")
 	titleLabel.Name = "Title"
-	titleLabel.Size = UDim2.new(1, -80, 1, 0)
-	titleLabel.Position = UDim2.new(0, iconLabel and 40 or 16, 0, 0)
+	titleLabel.Size = UDim2.new(1, -100, 1, 0)
+	titleLabel.Position = UDim2.new(0, iconLabel and 44 or 16, 0, 0)
 	titleLabel.BackgroundTransparency = 1
 	titleLabel.BorderSizePixel = 0
 	titleLabel.Text = self.Title
 	titleLabel.Font = Enum.Font.GothamSemibold
 	titleLabel.TextSize = 15
 	titleLabel.TextColor3 = ThemeManager:GetColor("TextPrimary")
-	titleLabel.TextTransparency = 0.1
 	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 	titleLabel.TextYAlignment = Enum.TextYAlignment.Center
 	titleLabel.Parent = titleBar
@@ -1550,128 +1609,156 @@ function Window:New(options)
 
 	local windowButtons = Instance.new("Frame")
 	windowButtons.Name = "WindowButtons"
-	windowButtons.Size = UDim2.new(0, 90, 0, 24)
-	windowButtons.Position = UDim2.new(1, -100, 0.5, -12)
+	windowButtons.Size = UDim2.new(0, 90, 0, 26)
+	windowButtons.Position = UDim2.new(1, -104, 0.5, -13)
 	windowButtons.BackgroundTransparency = 1
 	windowButtons.BorderSizePixel = 0
 	windowButtons.Parent = titleBar
 
-	local function createWindowButton(iconName, order)
+	local buttonColors = {
+		{idle = Color3.fromRGB(255, 100, 89), hover = Color3.fromRGB(255, 80, 70)},
+		{idle = Color3.fromRGB(255, 190, 50), hover = Color3.fromRGB(240, 170, 40)},
+		{idle = Color3.fromRGB(60, 200, 80), hover = Color3.fromRGB(50, 180, 70)},
+	}
+
+	local function createMacButton(colorSet, order)
 		local btn = Instance.new("TextButton")
-		btn.Name = iconName .. "Button"
-		btn.Size = UDim2.new(0, 24, 0, 24)
-		btn.Position = UDim2.new(0, (order - 1) * 28, 0, 0)
-		btn.BackgroundColor3 = ThemeManager:GetColor("Surface")
-		btn.BackgroundTransparency = 1
+		btn.Name = "MacButton" .. order
+		btn.Size = UDim2.new(0, 14, 0, 14)
+		btn.Position = UDim2.new(0, (order - 1) * 22, 0.5, -7)
+		btn.BackgroundColor3 = colorSet.idle
 		btn.BorderSizePixel = 0
 		btn.Text = ""
+		btn.AutoButtonColor = false
 		btn.ZIndex = titleBar.ZIndex + 2
 		btn.Parent = windowButtons
 
-		local icon = IconManager:CreateIconLabel(btn, iconName, UDim2.new(0, 14, 0, 14), ThemeManager:GetColor("TextSecondary"))
-		if icon then
-			icon.Position = UDim2.new(0.5, -7, 0.5, -7)
-			icon.ZIndex = btn.ZIndex + 1
-		end
+		Utility:CreateCorner(btn, 7)
 
 		btn.MouseEnter:Connect(function()
-			AnimationManager:CreateTween(btn, {BackgroundTransparency = 0.7}, "Smooth", "Out", 0.15)
-			if icon then
-				AnimationManager:CreateTween(icon, {ImageColor3 = ThemeManager:GetColor("TextPrimary")}, "Smooth", "Out", 0.15)
-			end
+			AnimationManager:CreateTween(btn, {BackgroundColor3 = colorSet.hover}, "Smooth", "Out", 0.1)
 		end)
 
 		btn.MouseLeave:Connect(function()
-			AnimationManager:CreateTween(btn, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
-			if icon then
-				AnimationManager:CreateTween(icon, {ImageColor3 = ThemeManager:GetColor("TextSecondary")}, "Smooth", "Out", 0.2)
-			end
+			AnimationManager:CreateTween(btn, {BackgroundColor3 = colorSet.idle}, "Smooth", "Out", 0.2)
 		end)
 
-		btn.MouseButton1Click:Connect(function()
-			SoundManager:PlayClick()
-			AnimationManager:RippleEffect(btn, ThemeManager:GetColor("Accent"), 0.3)
-		end)
-
-		return btn, icon
+		return btn
 	end
 
-	local minimizeBtn, minimizeIcon = createWindowButton("Minus", 1)
-	local maximizeBtn, maximizeIcon = createWindowButton("Square", 2)
-	local closeBtn, closeIcon = createWindowButton("Close", 3)
+	local closeBtn = createMacButton(buttonColors[1], 1)
+	closeBtn.MouseButton1Click:Connect(function() self:Close() end)
 
-	minimizeBtn.MouseButton1Click:Connect(function()
-		self:Minimize()
-	end)
+	local minimizeBtn = createMacButton(buttonColors[2], 2)
+	minimizeBtn.MouseButton1Click:Connect(function() self:Minimize() end)
 
-	maximizeBtn.MouseButton1Click:Connect(function()
-		self:ToggleMaximize()
-	end)
+	local maximizeBtn = createMacButton(buttonColors[3], 3)
+	maximizeBtn.MouseButton1Click:Connect(function() self:ToggleMaximize() end)
 
-	closeBtn.MouseButton1Click:Connect(function()
-		self:Close()
-	end)
+	local bodyFrame = Instance.new("Frame")
+	bodyFrame.Name = "Body"
+	bodyFrame.Size = UDim2.new(1, 0, 1, -44)
+	bodyFrame.Position = UDim2.new(0, 0, 0, 44)
+	bodyFrame.BackgroundTransparency = 1
+	bodyFrame.BorderSizePixel = 0
+	bodyFrame.Parent = mainFrame
 
-	local tabContainer = Instance.new("Frame")
-	tabContainer.Name = "TabContainer"
-	tabContainer.Size = UDim2.new(1, 0, 0, 38)
-	tabContainer.Position = UDim2.new(0, 0, 0, 42)
-	tabContainer.BackgroundColor3 = ThemeManager:GetColor("Background")
-	tabContainer.BorderSizePixel = 0
-	tabContainer.Parent = mainFrame
+	local sidebar = Instance.new("Frame")
+	sidebar.Name = "Sidebar"
+	sidebar.Size = UDim2.new(0, self.SidebarWidth, 1, 0)
+	sidebar.Position = UDim2.new(0, 0, 0, 0)
+	sidebar.BackgroundColor3 = ThemeManager:GetColor("SurfaceAlt")
+	sidebar.BorderSizePixel = 0
+	sidebar.Parent = bodyFrame
 
-	self.TabContainer = tabContainer
+	self.Sidebar = sidebar
 
-	Utility:CreateStroke(tabContainer, ThemeManager:GetColor("Border"), 0.5, 1)
+	local sidebarDivider = Instance.new("Frame")
+	sidebarDivider.Name = "SidebarDivider"
+	sidebarDivider.Size = UDim2.new(0, 1, 1, 0)
+	sidebarDivider.Position = UDim2.new(1, 0, 0, 0)
+	sidebarDivider.BackgroundColor3 = ThemeManager:GetColor("Divider")
+	sidebarDivider.BorderSizePixel = 0
+	sidebarDivider.Parent = sidebar
+
+	local sidebarLayout = Instance.new("UIListLayout")
+	sidebarLayout.FillDirection = Enum.FillDirection.Vertical
+	sidebarLayout.Padding = UDim.new(0, 2)
+	sidebarLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	sidebarLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	sidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	sidebarLayout.Parent = sidebar
+
+	local sidebarPadding = Instance.new("UIPadding")
+	sidebarPadding.PaddingTop = UDim.new(0, 8)
+	sidebarPadding.PaddingBottom = UDim.new(0, 8)
+	sidebarPadding.Parent = sidebar
 
 	local tabIndicator = Instance.new("Frame")
 	tabIndicator.Name = "TabIndicator"
-	tabIndicator.Size = UDim2.new(0, 0, 0, 2)
-	tabIndicator.Position = UDim2.new(0, 0, 1, -2)
+	tabIndicator.Size = UDim2.new(0, 3, 0, 0)
+	tabIndicator.Position = UDim2.new(0, 0, 0, 0)
 	tabIndicator.BackgroundColor3 = ThemeManager:GetColor("Accent")
 	tabIndicator.BorderSizePixel = 0
-	tabIndicator.Parent = tabContainer
+	tabIndicator.Parent = sidebar
 
 	self.TabIndicator = tabIndicator
 
-	local contentArea = Instance.new("Frame")
+	local contentArea = Instance.new("ScrollingFrame")
 	contentArea.Name = "ContentArea"
-	contentArea.Size = UDim2.new(1, 0, 1, -(42 + 38))
-	contentArea.Position = UDim2.new(0, 0, 0, 42 + 38)
+	contentArea.Size = UDim2.new(1, -(self.SidebarWidth + 1), 1, 0)
+	contentArea.Position = UDim2.new(0, self.SidebarWidth + 1, 0, 0)
 	contentArea.BackgroundColor3 = ThemeManager:GetColor("Background")
 	contentArea.BorderSizePixel = 0
-	contentArea.Parent = mainFrame
+	contentArea.ScrollBarThickness = 3
+	contentArea.ScrollBarImageColor3 = ThemeManager:GetColor("ScrollBar")
+	contentArea.ScrollBarImageTransparency = 0.6
+	contentArea.CanvasSize = UDim2.new(0, 0, 0, 0)
+	contentArea.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	contentArea.ScrollingDirection = Enum.ScrollingDirection.Y
+	contentArea.ElasticBehavior = Enum.ElasticBehavior.Never
+	contentArea.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
+	contentArea.Parent = bodyFrame
 
 	self.ContentArea = contentArea
+
+	local contentPadding = Instance.new("UIPadding")
+	contentPadding.PaddingTop = UDim.new(0, 16)
+	contentPadding.PaddingBottom = UDim.new(0, 16)
+	contentPadding.PaddingLeft = UDim.new(0, 18)
+	contentPadding.PaddingRight = UDim.new(0, 18)
+	contentPadding.Parent = contentArea
+
+	local contentLayout = Instance.new("UIListLayout")
+	contentLayout.FillDirection = Enum.FillDirection.Vertical
+	contentLayout.Padding = UDim.new(0, 10)
+	contentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+	contentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	contentLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	contentLayout.Parent = contentArea
+
+	self._contentLayout = contentLayout
+
+	contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+		local size = contentLayout.AbsoluteContentSize
+		contentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
+	end)
 
 	DragService:MakeDraggable(mainFrame, titleBar, {
 		ConstrainToScreen = true,
 		SmoothDrag = true,
-		OnDragStart = function()
-			AnimationManager:CreateTween(mainFrame, {
-				BackgroundTransparency = 0.05
-			}, "Smooth", "Out", 0.1)
-		end,
-		OnDragEnd = function()
-			AnimationManager:CreateTween(mainFrame, {
-				BackgroundTransparency = 0
-			}, "Smooth", "Out", 0.2)
-		end,
 	})
 
-	if self.Resizable then
-		DragService:MakeResizable(mainFrame, {MinSize = self.MinSize})
-	end
+	DragService:MakeResizable(mainFrame, {
+		MinSize = self.MinSize,
+		Enabled = self.Resizable,
+	})
 
 	self._themeConnection = ThemeManager:OnChange(function(palette, animate)
 		self:UpdateTheme(palette, animate)
 	end)
 
 	table.insert(Windows, self)
-
-	AnimationManager:CreateTween(mainFrame, {
-		BackgroundTransparency = 0,
-	}, "Smooth", "Out", 0.4)
 
 	return self
 end
@@ -1685,8 +1772,6 @@ function Window:CreateTab(options)
 	if #self.Tabs == 1 then
 		self:SelectTab(tab)
 	end
-
-	self:UpdateTabLayout()
 
 	return tab
 end
@@ -1709,27 +1794,19 @@ function Window:SelectTab(tab)
 
 	local tabButton = tab.TabButton
 	if tabButton then
-		local targetX = tabButton.AbsolutePosition.X - self.TabContainer.AbsolutePosition.X
-		local targetWidth = tabButton.AbsoluteSize.X
+		local targetY = tabButton.AbsolutePosition.Y - self.Sidebar.AbsolutePosition.Y
+		local targetHeight = tabButton.AbsoluteSize.Y
+
 		AnimationManager:CreateTween(self.TabIndicator, {
-			Position = UDim2.new(0, targetX, 1, -2),
-			Size = UDim2.new(0, targetWidth, 0, 2)
+			Position = UDim2.new(0, 0, 0, targetY),
+			Size = UDim2.new(0, 3, 0, targetHeight)
 		}, "Smooth", "Out", 0.35)
 	end
 
 	SoundManager:PlayTabSwitch()
 
-	tab:UpdateContentSize()
-end
-
-function Window:UpdateTabLayout()
-	local xOffset = 0
-	for i, tab in ipairs(self.Tabs) do
-		if tab.TabButton then
-			tab.TabButton.Position = UDim2.new(0, xOffset, 0, 0)
-			xOffset = xOffset + tab.TabButton.AbsoluteSize.X + 2
-		end
-	end
+	local size = self._contentLayout.AbsoluteContentSize
+	self.ContentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
 end
 
 function Window:Minimize()
@@ -1737,23 +1814,21 @@ function Window:Minimize()
 	if self._minimized then
 		self._previousSize = self.MainFrame.Size
 		AnimationManager:CreateTween(self.MainFrame, {
-			Size = UDim2.new(0, self.MainFrame.AbsoluteSize.X, 0, 42)
+			Size = UDim2.new(0, self.MainFrame.AbsoluteSize.X, 0, 44)
 		}, "Smooth", "Out", 0.3)
 		AnimationManager:CreateTween(self.ContentArea, {
-			Size = UDim2.new(1, 0, 0, 0)
+			Size = UDim2.new(1, -(self.SidebarWidth + 1), 0, 0)
 		}, "Smooth", "Out", 0.25)
-		AnimationManager:CreateTween(self.TabContainer, {
-			Size = UDim2.new(1, 0, 0, 0)
-		}, "Smooth", "Out", 0.25)
+		local tabArea = self.MainFrame:FindFirstChild("Body")
+		if tabArea then
+			tabArea.Size = UDim2.new(1, 0, 0, 0)
+		end
 	else
 		AnimationManager:CreateTween(self.MainFrame, {
 			Size = self._previousSize or self.Size
-		}, "Smooth", "Out", 0.35)
-		AnimationManager:CreateTween(self.ContentArea, {
-			Size = UDim2.new(1, 0, 1, -(42 + 38))
-		}, "Smooth", "Out", 0.3)
-		AnimationManager:CreateTween(self.TabContainer, {
-			Size = UDim2.new(1, 0, 0, 38)
+		}, "Smooth", "Out", 0.4)
+		AnimationManager:CreateTween(self.MainFrame:FindFirstChild("Body"), {
+			Size = UDim2.new(1, 0, 1, -44)
 		}, "Smooth", "Out", 0.3)
 	end
 end
@@ -1764,7 +1839,7 @@ function Window:ToggleMaximize()
 		AnimationManager:CreateTween(self.MainFrame, {
 			Size = self._previousSize or self.Size,
 			Position = self._previousPosition or self.Position
-		}, "Smooth", "Out", 0.35)
+		}, "Smooth", "Out", 0.4)
 	else
 		self._maximized = true
 		self._previousSize = self.MainFrame.Size
@@ -1773,7 +1848,7 @@ function Window:ToggleMaximize()
 		AnimationManager:CreateTween(self.MainFrame, {
 			Size = UDim2.new(0, screenSize.X, 0, screenSize.Y),
 			Position = UDim2.new(0, 0, 0, 0)
-		}, "Smooth", "Out", 0.35)
+		}, "Smooth", "Out", 0.4)
 	end
 end
 
@@ -1811,46 +1886,26 @@ function Window:Destroy()
 end
 
 function Window:UpdateTheme(palette, animate)
-	animate = animate and true
-
 	if animate then
-		AnimationManager:CreateTween(self.MainFrame, {
-			BackgroundColor3 = palette.Surface,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.TitleBar, {
-			BackgroundColor3 = palette.SurfaceAlt,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.TabContainer, {
-			BackgroundColor3 = palette.Background,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.ContentArea, {
-			BackgroundColor3 = palette.Background,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self._titleBarBottom, {
-			BackgroundColor3 = palette.Border,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.TabIndicator, {
-			BackgroundColor3 = palette.Accent,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.MainFrame, {BackgroundColor3 = palette.Surface}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.TitleBar, {BackgroundColor3 = palette.SurfaceAlt}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.Sidebar, {BackgroundColor3 = palette.SurfaceAlt}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ContentArea, {BackgroundColor3 = palette.Background}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.TabIndicator, {BackgroundColor3 = palette.Accent}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.TitleLabel, {TextColor3 = palette.TextPrimary}, "Smooth", "Out", 0.3)
 	else
 		self.MainFrame.BackgroundColor3 = palette.Surface
 		self.TitleBar.BackgroundColor3 = palette.SurfaceAlt
-		self.TabContainer.BackgroundColor3 = palette.Background
+		self.Sidebar.BackgroundColor3 = palette.SurfaceAlt
 		self.ContentArea.BackgroundColor3 = palette.Background
-		self._titleBarBottom.BackgroundColor3 = palette.Border
 		self.TabIndicator.BackgroundColor3 = palette.Accent
+		self.TitleLabel.TextColor3 = palette.TextPrimary
 	end
 end
 
 function Window:UpdateContentSize()
-	if self._currentTab then
-		self._currentTab:UpdateContentSize()
-	end
+	local size = self._contentLayout.AbsoluteContentSize
+	self.ContentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
 end
 
 function Window:GetWindows()
@@ -1864,7 +1919,6 @@ NovaUI.Window = Window
 local Tab = {}
 Tab.__index = Tab
 
-local TweenService = game:GetService("TweenService")
 
 
 
@@ -1882,97 +1936,52 @@ function Tab:New(window, options)
 	self.Sections = {}
 	self._visible = false
 
+	local sidebar = window.Sidebar
+
 	local tabButton = Instance.new("TextButton")
 	tabButton.Name = "Tab_" .. self.Name
-	tabButton.Size = UDim2.new(0, 0, 1, 0)
-	tabButton.Position = UDim2.new(0, 0, 0, 0)
-	tabButton.BackgroundColor3 = ThemeManager:GetColor("Background")
+	tabButton.Size = UDim2.new(1, -12, 0, 44)
+	tabButton.Position = UDim2.new(0, 6, 0, 0)
+	tabButton.BackgroundColor3 = ThemeManager:GetColor("SurfaceAlt")
 	tabButton.BackgroundTransparency = 1
 	tabButton.BorderSizePixel = 0
 	tabButton.Text = ""
-	tabButton.Parent = window.TabContainer
+	tabButton.Parent = sidebar
+
+	Utility:CreateCorner(tabButton, 8)
 
 	self.TabButton = tabButton
 
-	local tabLayout = Instance.new("UIListLayout")
-	tabLayout.FillDirection = Enum.FillDirection.Horizontal
-	tabLayout.Padding = UDim.new(0, 6)
-	tabLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-	tabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	tabLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	tabLayout.Parent = tabButton
-
-	local tabPadding = Instance.new("UIPadding")
-	tabPadding.PaddingLeft = UDim.new(0, 14)
-	tabPadding.PaddingRight = UDim.new(0, 14)
-	tabPadding.Parent = tabButton
-
-	local iconLabel = nil
 	if self.Icon then
-		iconLabel = IconManager:CreateIconLabel(tabButton, self.Icon, UDim2.new(0, 16, 0, 16), ThemeManager:GetColor("TextMuted"))
-		if iconLabel then
-			iconLabel.LayoutOrder = 1
+		local icon = IconManager:CreateIconLabel(tabButton, self.Icon, UDim2.new(0, 22, 0, 22), ThemeManager:GetColor("TextMuted"))
+		if icon then
+			icon.Position = UDim2.new(0.5, -11, 0.5, -11)
+			icon.ZIndex = tabButton.ZIndex + 1
+			self._icon = icon
 		end
 	end
 
-	local nameLabel = Instance.new("TextLabel")
-	nameLabel.Name = "Name"
-	nameLabel.Size = UDim2.new(0, 0, 0, 16)
-	nameLabel.BackgroundTransparency = 1
-	nameLabel.BorderSizePixel = 0
-	nameLabel.Text = self.Name
-	nameLabel.Font = Enum.Font.Gotham
-	nameLabel.TextSize = 13
-	nameLabel.TextColor3 = ThemeManager:GetColor("TextMuted")
-	nameLabel.TextTransparency = 0
-	nameLabel.TextXAlignment = Enum.TextXAlignment.Center
-	nameLabel.TextYAlignment = Enum.TextYAlignment.Center
-	nameLabel.LayoutOrder = 2
-	nameLabel.Parent = tabButton
-
-	self.NameLabel = nameLabel
-	self.IconLabel = iconLabel
-
-	local buttonWidth = Utility:GetTextBounds(self.Name, Enum.Font.Gotham, 13).X + (self.Icon and 32 or 24)
-
-	tabButton.Size = UDim2.new(0, buttonWidth, 1, 0)
-
 	tabButton.MouseEnter:Connect(function()
 		if not self._active then
-			AnimationManager:CreateTween(nameLabel, {
-				TextColor3 = ThemeManager:GetColor("TextSecondary")
-			}, "Smooth", "Out", 0.2)
-			if iconLabel then
-				AnimationManager:CreateTween(iconLabel, {
-					ImageColor3 = ThemeManager:GetColor("TextSecondary")
-				}, "Smooth", "Out", 0.2)
+			AnimationManager:CreateTween(tabButton, {BackgroundTransparency = 0.85}, "Smooth", "Out", 0.2)
+			if self._icon then
+				AnimationManager:CreateTween(self._icon, {ImageColor3 = ThemeManager:GetColor("TextSecondary")}, "Smooth", "Out", 0.2)
 			end
-			AnimationManager:CreateTween(tabButton, {
-				BackgroundTransparency = 0.92
-			}, "Smooth", "Out", 0.2)
 			SoundManager:PlayHover()
 		end
 	end)
 
 	tabButton.MouseLeave:Connect(function()
 		if not self._active then
-			AnimationManager:CreateTween(nameLabel, {
-				TextColor3 = ThemeManager:GetColor("TextMuted")
-			}, "Smooth", "Out", 0.3)
-			if iconLabel then
-				AnimationManager:CreateTween(iconLabel, {
-					ImageColor3 = ThemeManager:GetColor("TextMuted")
-				}, "Smooth", "Out", 0.3)
+			AnimationManager:CreateTween(tabButton, {BackgroundTransparency = 1}, "Smooth", "Out", 0.3)
+			if self._icon then
+				AnimationManager:CreateTween(self._icon, {ImageColor3 = ThemeManager:GetColor("TextMuted")}, "Smooth", "Out", 0.3)
 			end
-			AnimationManager:CreateTween(tabButton, {
-				BackgroundTransparency = 1
-			}, "Smooth", "Out", 0.3)
 		end
 	end)
 
 	tabButton.MouseButton1Click:Connect(function()
 		window:SelectTab(self)
-		AnimationManager:RippleEffect(tabButton, ThemeManager:GetColor("Accent"), 0.3)
 	end)
 
 	local container = Instance.new("ScrollingFrame")
@@ -1981,9 +1990,7 @@ function Tab:New(window, options)
 	container.Position = UDim2.new(0, 0, 0, 0)
 	container.BackgroundTransparency = 1
 	container.BorderSizePixel = 0
-	container.ScrollBarThickness = 2
-	container.ScrollBarImageColor3 = ThemeManager:GetColor("Accent")
-	container.ScrollBarImageTransparency = 0.6
+	container.ScrollBarThickness = 0
 	container.CanvasSize = UDim2.new(0, 0, 0, 0)
 	container.AutomaticCanvasSize = Enum.AutomaticSize.Y
 	container.ScrollingDirection = Enum.ScrollingDirection.Y
@@ -1995,15 +2002,13 @@ function Tab:New(window, options)
 	self.Container = container
 
 	local padding = Instance.new("UIPadding")
-	padding.PaddingTop = UDim.new(0, 12)
-	padding.PaddingBottom = UDim.new(0, 12)
-	padding.PaddingLeft = UDim.new(0, 14)
-	padding.PaddingRight = UDim.new(0, 14)
+	padding.PaddingLeft = UDim.new(0, 0)
+	padding.PaddingRight = UDim.new(0, 0)
 	padding.Parent = container
 
 	local listLayout = Instance.new("UIListLayout")
 	listLayout.FillDirection = Enum.FillDirection.Vertical
-	listLayout.Padding = UDim.new(0, 8)
+	listLayout.Padding = UDim.new(0, 10)
 	listLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 	listLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -2037,18 +2042,10 @@ function Tab:Show()
 	self.Container.Visible = true
 	self._active = true
 
-	AnimationManager:CreateTween(self.NameLabel, {
-		TextColor3 = ThemeManager:GetColor("Accent")
-	}, "Smooth", "Out", 0.3)
+	AnimationManager:CreateTween(self.TabButton, {BackgroundTransparency = 0.8}, "Smooth", "Out", 0.3)
 
-	AnimationManager:CreateTween(self.TabButton, {
-		BackgroundTransparency = 0.9
-	}, "Smooth", "Out", 0.3)
-
-	if self.IconLabel then
-		AnimationManager:CreateTween(self.IconLabel, {
-			ImageColor3 = ThemeManager:GetColor("Accent")
-		}, "Smooth", "Out", 0.3)
+	if self._icon then
+		AnimationManager:CreateTween(self._icon, {ImageColor3 = ThemeManager:GetColor("Accent")}, "Smooth", "Out", 0.3)
 	end
 
 	self.Container.CanvasPosition = Vector2.new(0, 0)
@@ -2060,56 +2057,27 @@ function Tab:Hide()
 	self.Container.Visible = false
 	self._active = false
 
-	AnimationManager:CreateTween(self.NameLabel, {
-		TextColor3 = ThemeManager:GetColor("TextMuted")
-	}, "Smooth", "Out", 0.2)
+	AnimationManager:CreateTween(self.TabButton, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
 
-	AnimationManager:CreateTween(self.TabButton, {
-		BackgroundTransparency = 1
-	}, "Smooth", "Out", 0.2)
-
-	if self.IconLabel then
-		AnimationManager:CreateTween(self.IconLabel, {
-			ImageColor3 = ThemeManager:GetColor("TextMuted")
-		}, "Smooth", "Out", 0.2)
+	if self._icon then
+		AnimationManager:CreateTween(self._icon, {ImageColor3 = ThemeManager:GetColor("TextMuted")}, "Smooth", "Out", 0.2)
 	end
 end
 
 function Tab:UpdateContentSize()
 	task.wait()
 	local contentSize = self._listLayout.AbsoluteContentSize
-	self.Container.CanvasSize = UDim2.new(0, 0, 0, contentSize.Y + 24)
+	self.Container.CanvasSize = UDim2.new(0, 0, 0, contentSize.Y + 32)
 end
 
 function Tab:UpdateTheme(palette, animate)
-	animate = animate and true
-
 	if self._active then
 		if animate then
-			AnimationManager:CreateTween(self.NameLabel, {
-				TextColor3 = palette.Accent
-			}, "Smooth", "Out", 0.3)
-			if self.IconLabel then
-				AnimationManager:CreateTween(self.IconLabel, {
-					ImageColor3 = palette.Accent
-				}, "Smooth", "Out", 0.3)
+			if self._icon then
+				AnimationManager:CreateTween(self._icon, {ImageColor3 = palette.Accent}, "Smooth", "Out", 0.3)
 			end
-		else
-			self.NameLabel.TextColor3 = palette.Accent
-			if self.IconLabel then
-				self.IconLabel.ImageColor3 = palette.Accent
-			end
-		end
-	else
-		if animate then
-			AnimationManager:CreateTween(self.NameLabel, {
-				TextColor3 = palette.TextMuted
-			}, "Smooth", "Out", 0.3)
-			if self.IconLabel then
-				AnimationManager:CreateTween(self.IconLabel, {
-					ImageColor3 = palette.TextMuted
-				}, "Smooth", "Out", 0.3)
-			end
+		elseif self._icon then
+			self._icon.ImageColor3 = palette.Accent
 		end
 	end
 end
@@ -2146,105 +2114,82 @@ function Section:New(tab, options)
 
 	self.Tab = tab
 	self.Name = options.Name or "Section"
-	self.Description = options.Description or nil
-	self.Side = options.Side or "Left"
-	self.Components = {}
+	self.Columns = options.Columns or 1
+self.Components = {}
 
 	local container = Instance.new("Frame")
 	container.Name = "Section_" .. self.Name
 	container.Size = UDim2.new(1, 0, 0, 0)
-	container.BackgroundColor3 = ThemeManager:GetColor("Surface")
+	container.BackgroundTransparency = 1
 	container.BorderSizePixel = 0
 	container.AutomaticSize = Enum.AutomaticSize.Y
-
 	self.Container = container
 
-	Utility:CreateCorner(container, 8)
-	Utility:CreateStroke(container, ThemeManager:GetColor("Border"), 0.5, 1)
+	local headerFrame = Instance.new("Frame")
+	headerFrame.Name = "Header"
+	headerFrame.Size = UDim2.new(1, 0, 0, 28)
+	headerFrame.BackgroundTransparency = 1
+	headerFrame.BorderSizePixel = 0
+	headerFrame.Parent = container
 
-	local accentBorder = Instance.new("Frame")
-	accentBorder.Name = "AccentBorder"
-	accentBorder.Size = UDim2.new(0, 3, 1, -4)
-	accentBorder.Position = UDim2.new(0, 0, 0, 2)
-	accentBorder.BackgroundColor3 = ThemeManager:GetColor("Accent")
-	accentBorder.BorderSizePixel = 0
-	accentBorder.Parent = container
+	local divider = Instance.new("Frame")
+	divider.Name = "Divider"
+	divider.Size = UDim2.new(1, 0, 0, 1)
+	divider.Position = UDim2.new(0, 0, 1, -1)
+	divider.BackgroundColor3 = ThemeManager:GetColor("Divider")
+	divider.BorderSizePixel = 0
+	divider.Parent = headerFrame
 
-	Utility:CreateCorner(accentBorder, 2)
+	local headerLabel = Instance.new("TextLabel")
+	headerLabel.Name = "HeaderLabel"
+	headerLabel.Size = UDim2.new(1, -8, 1, 0)
+	headerLabel.Position = UDim2.new(0, 0, 0, 0)
+	headerLabel.BackgroundTransparency = 1
+	headerLabel.BorderSizePixel = 0
+	headerLabel.Text = self.Name
+	headerLabel.Font = Enum.Font.GothamSemibold
+	headerLabel.TextSize = 12
+	headerLabel.TextColor3 = ThemeManager:GetColor("HeaderText")
+	headerLabel.TextTransparency = 0.2
+	headerLabel.TextXAlignment = Enum.TextXAlignment.Left
+	headerLabel.TextYAlignment = Enum.TextYAlignment.Center
+	headerLabel.Parent = headerFrame
 
-	local innerFrame = Instance.new("Frame")
-	innerFrame.Name = "Inner"
-	innerFrame.Size = UDim2.new(1, -16, 1, -16)
-	innerFrame.Position = UDim2.new(0, 16, 0, 8)
-	innerFrame.BackgroundTransparency = 1
-	innerFrame.BorderSizePixel = 0
-	innerFrame.AutomaticSize = Enum.AutomaticSize.Y
-	innerFrame.Parent = container
+	self.Divider = divider
+	self.HeaderLabel = headerLabel
 
-	self.InnerFrame = innerFrame
+	local contentFrame = Instance.new("Frame")
+	contentFrame.Name = "Content"
+	contentFrame.Size = UDim2.new(1, 0, 0, 0)
+	contentFrame.Position = UDim2.new(0, 0, 0, 32)
+	contentFrame.BackgroundTransparency = 1
+	contentFrame.BorderSizePixel = 0
+	contentFrame.AutomaticSize = Enum.AutomaticSize.Y
+	contentFrame.Parent = container
 
-	if self.Name then
-		local titleFrame = Instance.new("Frame")
-		titleFrame.Name = "TitleFrame"
-		titleFrame.Size = UDim2.new(1, 0, 0, 24)
-		titleFrame.BackgroundTransparency = 1
-		titleFrame.BorderSizePixel = 0
-		titleFrame.AutomaticSize = Enum.AutomaticSize.Y
-		titleFrame.Parent = innerFrame
+	self.ContentFrame = contentFrame
 
-		self.TitleFrame = titleFrame
-
-		local nameLabel = Instance.new("TextLabel")
-		nameLabel.Name = "Title"
-		nameLabel.Size = UDim2.new(1, 0, 0, 20)
-		nameLabel.BackgroundTransparency = 1
-		nameLabel.BorderSizePixel = 0
-		nameLabel.Text = self.Name
-		nameLabel.Font = Enum.Font.GothamSemibold
-		nameLabel.TextSize = 14
-		nameLabel.TextColor3 = ThemeManager:GetColor("TextPrimary")
-		nameLabel.TextXAlignment = Enum.TextXAlignment.Left
-		nameLabel.TextYAlignment = Enum.TextYAlignment.Center
-		nameLabel.Parent = titleFrame
-
-		self.NameLabel = nameLabel
-
-		if self.Description then
-			local descLabel = Instance.new("TextLabel")
-			descLabel.Name = "Description"
-			descLabel.Size = UDim2.new(1, 0, 0, 16)
-			descLabel.Position = UDim2.new(0, 0, 0, 22)
-			descLabel.BackgroundTransparency = 1
-			descLabel.BorderSizePixel = 0
-			descLabel.Text = self.Description
-			descLabel.Font = Enum.Font.Gotham
-			descLabel.TextSize = 12
-			descLabel.TextColor3 = ThemeManager:GetColor("TextMuted")
-			descLabel.TextXAlignment = Enum.TextXAlignment.Left
-			descLabel.TextYAlignment = Enum.TextYAlignment.Center
-			descLabel.Parent = titleFrame
-		end
-
-		local separator = Instance.new("Frame")
-		separator.Name = "Separator"
-		separator.Size = UDim2.new(1, 0, 0, 1)
-		separator.Position = UDim2.new(0, 0, 1, 0)
-		separator.BackgroundColor3 = ThemeManager:GetColor("Border")
-		separator.BorderSizePixel = 0
-		separator.Parent = titleFrame
-
-		self.TitleSeparator = separator
+	if self.Columns > 1 then
+		local gridLayout = Instance.new("UIGridLayout")
+		gridLayout.FillDirection = Enum.FillDirection.Horizontal
+		gridLayout.CellSize = UDim2.new(0.5, -5, 0, 0)
+		gridLayout.CellPadding = UDim2.new(0, 10, 0, 8)
+		gridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+		gridLayout.FillDirectionMaxCells = self.Columns
+		gridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+		gridLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+		gridLayout.Parent = contentFrame
+		self._gridLayout = gridLayout
+	else
+		local listLayout = Instance.new("UIListLayout")
+		listLayout.FillDirection = Enum.FillDirection.Vertical
+		listLayout.Padding = UDim.new(0, 6)
+		listLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+		listLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+		listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+		listLayout.Parent = contentFrame
+		self._listLayout = listLayout
 	end
-
-	local componentList = Instance.new("UIListLayout")
-	componentList.FillDirection = Enum.FillDirection.Vertical
-	componentList.Padding = UDim.new(0, 6)
-	componentList.HorizontalAlignment = Enum.HorizontalAlignment.Left
-	componentList.VerticalAlignment = Enum.VerticalAlignment.Top
-	componentList.SortOrder = Enum.SortOrder.LayoutOrder
-	componentList.Parent = innerFrame
-
-	self.ComponentList = componentList
 
 	self._themeConnection = ThemeManager:OnChange(function(palette, animate)
 		self:UpdateTheme(palette, animate)
@@ -2254,180 +2199,132 @@ function Section:New(tab, options)
 end
 
 function Section:CreateButton(options)
+	options = options or {}
 	local Button = NovaUI.Button
-	local button = Button:New(self, options)
-	button.Container.Parent = self.InnerFrame
-	button.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, button)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return button
+	local btn = Button:New(self, options)
+	table.insert(self.Components, btn)
+	btn.Container.Parent = self.ContentFrame
+	btn.Container.LayoutOrder = #self.Components
+	return btn
 end
 
 function Section:CreateToggle(options)
+	options = options or {}
 	local Toggle = NovaUI.Toggle
-	local toggle = Toggle:New(self, options)
-	toggle.Container.Parent = self.InnerFrame
-	toggle.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, toggle)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return toggle
+	local tg = Toggle:New(self, options)
+	table.insert(self.Components, tg)
+	tg.Container.Parent = self.ContentFrame
+	tg.Container.LayoutOrder = #self.Components
+	return tg
 end
 
 function Section:CreateSlider(options)
+	options = options or {}
 	local Slider = NovaUI.Slider
-	local slider = Slider:New(self, options)
-	slider.Container.Parent = self.InnerFrame
-	slider.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, slider)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return slider
+	local sl = Slider:New(self, options)
+	table.insert(self.Components, sl)
+	sl.Container.Parent = self.ContentFrame
+	sl.Container.LayoutOrder = #self.Components
+	return sl
 end
 
 function Section:CreateDropdown(options)
+	options = options or {}
 	local Dropdown = NovaUI.Dropdown
-	local dropdown = Dropdown:New(self, options)
-	dropdown.Container.Parent = self.InnerFrame
-	dropdown.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, dropdown)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return dropdown
-end
-
-function Section:CreateMultiDropdown(options)
-	local MultiDropdown = NovaUI.MultiDropdown
-	local multiDropdown = MultiDropdown:New(self, options)
-	multiDropdown.Container.Parent = self.InnerFrame
-	multiDropdown.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, multiDropdown)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return multiDropdown
-end
-
-function Section:CreateTextBox(options)
-	local TextBox = NovaUI.TextBox
-	local textBox = TextBox:New(self, options)
-	textBox.Container.Parent = self.InnerFrame
-	textBox.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, textBox)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return textBox
-end
-
-function Section:CreateKeybind(options)
-	local Keybind = NovaUI.Keybind
-	local keybind = Keybind:New(self, options)
-	keybind.Container.Parent = self.InnerFrame
-	keybind.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, keybind)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return keybind
+	local dd = Dropdown:New(self, options)
+	table.insert(self.Components, dd)
+	dd.Container.Parent = self.ContentFrame
+	dd.Container.LayoutOrder = #self.Components
+	return dd
 end
 
 function Section:CreateLabel(options)
+	options = options or {}
 	local Label = NovaUI.Label
-	local label = Label:New(self, options)
-	label.Container.Parent = self.InnerFrame
-	label.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, label)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return label
+	local lb = Label:New(self, options)
+	table.insert(self.Components, lb)
+	lb.Container.Parent = self.ContentFrame
+	lb.Container.LayoutOrder = #self.Components
+	return lb
 end
 
-function Section:CreateParagraph(options)
-	local Paragraph = NovaUI.Paragraph
-	local paragraph = Paragraph:New(self, options)
-	paragraph.Container.Parent = self.InnerFrame
-	paragraph.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, paragraph)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return paragraph
-end
-
-function Section:CreateColorPicker(options)
-	local ColorPicker = NovaUI.ColorPicker
-	local colorPicker = ColorPicker:New(self, options)
-	colorPicker.Container.Parent = self.InnerFrame
-	colorPicker.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, colorPicker)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return colorPicker
+function Section:CreateTextBox(options)
+	options = options or {}
+	local TextBox = NovaUI.TextBox
+	local tb = TextBox:New(self, options)
+	table.insert(self.Components, tb)
+	tb.Container.Parent = self.ContentFrame
+	tb.Container.LayoutOrder = #self.Components
+	return tb
 end
 
 function Section:CreateSeparator(options)
+	options = options or {}
 	local Separator = NovaUI.Separator
-	local separator = Separator:New(self, options)
-	separator.Container.Parent = self.InnerFrame
-	separator.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, separator)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return separator
+	local sp = Separator:New(self, options)
+	table.insert(self.Components, sp)
+	sp.Container.Parent = self.ContentFrame
+	sp.Container.LayoutOrder = #self.Components
+	return sp
+end
+
+function Section:CreateKeybind(options)
+	options = options or {}
+	local Keybind = NovaUI.Keybind
+	local kb = Keybind:New(self, options)
+	table.insert(self.Components, kb)
+	kb.Container.Parent = self.ContentFrame
+	kb.Container.LayoutOrder = #self.Components
+	return kb
+end
+
+function Section:CreateColorPicker(options)
+	options = options or {}
+	local ColorPicker = NovaUI.ColorPicker
+	local cp = ColorPicker:New(self, options)
+	table.insert(self.Components, cp)
+	cp.Container.Parent = self.ContentFrame
+	cp.Container.LayoutOrder = #self.Components
+	return cp
 end
 
 function Section:CreateProgressBar(options)
+	options = options or {}
 	local ProgressBar = NovaUI.ProgressBar
-	local progressBar = ProgressBar:New(self, options)
-	progressBar.Container.Parent = self.InnerFrame
-	progressBar.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, progressBar)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return progressBar
+	local pb = ProgressBar:New(self, options)
+	table.insert(self.Components, pb)
+	pb.Container.Parent = self.ContentFrame
+	pb.Container.LayoutOrder = #self.Components
+	return pb
 end
 
 function Section:CreateSearchBar(options)
+	options = options or {}
 	local SearchBar = NovaUI.SearchBar
-	local searchBar = SearchBar:New(self, options)
-	searchBar.Container.Parent = self.InnerFrame
-	searchBar.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, searchBar)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return searchBar
+	local sb = SearchBar:New(self, options)
+	table.insert(self.Components, sb)
+	sb.Container.Parent = self.ContentFrame
+	sb.Container.LayoutOrder = #self.Components
+	return sb
 end
 
-function Section:CreateImage(options)
-	local Image = NovaUI.Image
-	local image = Image:New(self, options)
-	image.Container.Parent = self.InnerFrame
-	image.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, image)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return image
-end
-
-function Section:CreateIcon(options)
-	local Icon = NovaUI.Icon
-	local icon = Icon:New(self, options)
-	icon.Container.Parent = self.InnerFrame
-	icon.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, icon)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return icon
-end
-
-function Section:CreateMiniConsole(options)
-	local MiniConsole = NovaUI.MiniConsole
-	local miniConsole = MiniConsole:New(self, options)
-	miniConsole.Container.Parent = self.InnerFrame
-	miniConsole.Container.LayoutOrder = #self.Components + 1
-	table.insert(self.Components, miniConsole)
-	self.Container.AutomaticSize = Enum.AutomaticSize.Y
-	return miniConsole
+function Section:CreateMultiDropdown(options)
+	options = options or {}
+	local MultiDropdown = NovaUI.MultiDropdown
+	local md = MultiDropdown:New(self, options)
+	table.insert(self.Components, md)
+	md.Container.Parent = self.ContentFrame
+	md.Container.LayoutOrder = #self.Components
+	return md
 end
 
 function Section:UpdateTheme(palette, animate)
 	if animate then
-		AnimationManager:CreateTween(self.Container, {
-			BackgroundColor3 = palette.Surface,
-		}, "Smooth", "Out", 0.3)
-		if self.NameLabel then
-			AnimationManager:CreateTween(self.NameLabel, {
-				TextColor3 = palette.TextPrimary,
-			}, "Smooth", "Out", 0.3)
-		end
+		AnimationManager:CreateTween(self.Divider, {BackgroundColor3 = palette.Divider}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.HeaderLabel, {TextColor3 = palette.HeaderText}, "Smooth", "Out", 0.3)
 	else
-		self.Container.BackgroundColor3 = palette.Surface
-		if self.NameLabel then
-			self.NameLabel.TextColor3 = palette.TextPrimary
-		end
+		self.Divider.BackgroundColor3 = palette.Divider
+		self.HeaderLabel.TextColor3 = palette.HeaderText
 	end
 end
 
@@ -2435,8 +2332,8 @@ function Section:Destroy()
 	if self._themeConnection then
 		self._themeConnection()
 	end
-	for _, component in ipairs(self.Components) do
-		component:Destroy()
+	for _, comp in ipairs(self.Components) do
+		comp:Destroy()
 	end
 	self.Container:Destroy()
 end
@@ -2464,7 +2361,6 @@ function Button:New(section, options)
 	self.Description = options.Description or nil
 	self.Icon = options.Icon or nil
 	self.Callback = options.Callback or function() end
-	self.Theme = options.Theme or "default"
 
 	local container = Instance.new("Frame")
 	container.Name = "Button_" .. self.Name
@@ -2484,25 +2380,26 @@ function Button:New(section, options)
 	mainFrame.Parent = container
 	self.MainFrame = mainFrame
 
-	Utility:CreateCorner(mainFrame, 6)
-	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.5, 1)
+	Utility:CreateCorner(mainFrame, 8)
+
+	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.6, 1)
 
 	local contentFrame = Instance.new("Frame")
 	contentFrame.Name = "Content"
-	contentFrame.Size = UDim2.new(1, -20, 1, 0)
-	contentFrame.Position = UDim2.new(0, 10, 0, 0)
+	contentFrame.Size = UDim2.new(1, -24, 1, 0)
+	contentFrame.Position = UDim2.new(0, 12, 0, 0)
 	contentFrame.BackgroundTransparency = 1
 	contentFrame.BorderSizePixel = 0
 	contentFrame.Parent = mainFrame
 
 	local layout = Instance.new("UIListLayout")
 	layout.FillDirection = Enum.FillDirection.Horizontal
-	layout.Padding = UDim.new(0, 8)
+	layout.Padding = UDim.new(0, 10)
 	layout.VerticalAlignment = Enum.VerticalAlignment.Center
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = contentFrame
 
-	local iconLabel = nil
+	local iconLabel
 	if self.Icon then
 		iconLabel = IconManager:CreateIconLabel(contentFrame, self.Icon, UDim2.new(0, 18, 0, 18), ThemeManager:GetColor("TextSecondary"))
 		if iconLabel then
@@ -2518,8 +2415,6 @@ function Button:New(section, options)
 	textFrame.AutomaticSize = Enum.AutomaticSize.X
 	textFrame.LayoutOrder = 2
 	textFrame.Parent = contentFrame
-
-	self.TextFrame = textFrame
 
 	local nameLabel = Instance.new("TextLabel")
 	nameLabel.Name = "Name"
@@ -2541,7 +2436,7 @@ function Button:New(section, options)
 		local descLabel = Instance.new("TextLabel")
 		descLabel.Name = "Description"
 		descLabel.Size = UDim2.new(0, 0, 1, 0)
-		descLabel.Position = UDim2.new(1, 6, 0, 0)
+		descLabel.Position = UDim2.new(1, 8, 0, 0)
 		descLabel.BackgroundTransparency = 1
 		descLabel.BorderSizePixel = 0
 		descLabel.Text = self.Description
@@ -2554,59 +2449,29 @@ function Button:New(section, options)
 		descLabel.Parent = textFrame
 	end
 
-	local hoverGlow = Instance.new("Frame")
-	hoverGlow.Name = "HoverGlow"
-	hoverGlow.Size = UDim2.new(1, 0, 1, 0)
-	hoverGlow.BackgroundColor3 = ThemeManager:GetColor("Accent")
-	hoverGlow.BackgroundTransparency = 1
-	hoverGlow.BorderSizePixel = 0
-	hoverGlow.ZIndex = mainFrame.ZIndex - 1
-	hoverGlow.Parent = container
-
-	Utility:CreateCorner(hoverGlow, 6)
-
 	mainFrame.MouseEnter:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.1
-		}, "Smooth", "Out", 0.15)
-		AnimationManager:CreateTween(hoverGlow, {
-			BackgroundTransparency = 0.92
-		}, "Smooth", "Out", 0.2)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.08}, "Smooth", "Out", 0.15)
 		SoundManager:PlayHover()
 	end)
 
 	mainFrame.MouseLeave:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 1
-		}, "Smooth", "Out", 0.2)
-		AnimationManager:CreateTween(hoverGlow, {
-			BackgroundTransparency = 1
-		}, "Smooth", "Out", 0.25)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
 	end)
 
 	mainFrame.MouseButton1Down:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.2
-		}, "Sharp", "In", 0.08)
-		AnimationManager:CreateTween(container, {
-			Size = UDim2.new(1, 0, 0, 34)
-		}, "Sharp", "In", 0.08)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.15}, "Sharp", "In", 0.08)
+		AnimationManager:CreateTween(container, {Size = UDim2.new(1, 0, 0, 34)}, "Sharp", "In", 0.08)
 	end)
 
 	mainFrame.MouseButton1Up:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.1
-		}, "Elastic", "Out", 0.3)
-		AnimationManager:CreateTween(container, {
-			Size = UDim2.new(1, 0, 0, 36)
-		}, "Elastic", "Out", 0.3)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.08}, "Elastic", "Out", 0.3)
+		AnimationManager:CreateTween(container, {Size = UDim2.new(1, 0, 0, 36)}, "Elastic", "Out", 0.3)
 	end)
 
 	mainFrame.MouseButton1Click:Connect(function()
 		SoundManager:PlayClick()
-		AnimationManager:RippleEffect(mainFrame, ThemeManager:GetColor("Accent"), 0.4)
-		local success, err = pcall(self.Callback)
-		if not success then
+		local ok, err = pcall(self.Callback)
+		if not ok then
 			warn("Button callback error:", err)
 		end
 	end)
@@ -2629,9 +2494,7 @@ end
 
 function Button:UpdateTheme(palette, animate)
 	if animate then
-		AnimationManager:CreateTween(self.NameLabel, {
-			TextColor3 = palette.TextPrimary,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.NameLabel, {TextColor3 = palette.TextPrimary}, "Smooth", "Out", 0.3)
 	else
 		self.NameLabel.TextColor3 = palette.TextPrimary
 	end
@@ -2685,13 +2548,13 @@ function Toggle:New(section, options)
 	mainFrame.Parent = container
 	self.MainFrame = mainFrame
 
-	Utility:CreateCorner(mainFrame, 6)
-	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.5, 1)
+	Utility:CreateCorner(mainFrame, 8)
+	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.6, 1)
 
 	local textFrame = Instance.new("Frame")
 	textFrame.Name = "TextFrame"
-	textFrame.Size = UDim2.new(1, -60, 1, 0)
-	textFrame.Position = UDim2.new(0, 10, 0, 0)
+	textFrame.Size = UDim2.new(1, -64, 1, 0)
+	textFrame.Position = UDim2.new(0, 12, 0, 0)
 	textFrame.BackgroundTransparency = 1
 	textFrame.BorderSizePixel = 0
 	textFrame.Parent = mainFrame
@@ -2708,7 +2571,6 @@ function Toggle:New(section, options)
 	nameLabel.TextXAlignment = Enum.TextXAlignment.Left
 	nameLabel.TextYAlignment = Enum.TextYAlignment.Center
 	nameLabel.Parent = textFrame
-
 	self.NameLabel = nameLabel
 
 	if self.Description then
@@ -2730,35 +2592,35 @@ function Toggle:New(section, options)
 
 	local toggleBg = Instance.new("Frame")
 	toggleBg.Name = "ToggleBg"
-	toggleBg.Size = UDim2.new(0, 44, 0, 22)
-	toggleBg.Position = UDim2.new(1, -54, 0.5, -11)
-	toggleBg.BackgroundColor3 = ThemeManager:GetColor("Border")
+	toggleBg.Size = UDim2.new(0, 44, 0, 24)
+	toggleBg.Position = UDim2.new(1, -56, 0.5, -12)
+	toggleBg.BackgroundColor3 = ThemeManager:GetColor("ToggleInactive")
 	toggleBg.BorderSizePixel = 0
 	toggleBg.Parent = mainFrame
 
 	self.ToggleBg = toggleBg
-	Utility:CreateCorner(toggleBg, 11)
+	Utility:CreateCorner(toggleBg, 12)
 
 	local toggleKnob = Instance.new("Frame")
 	toggleKnob.Name = "Knob"
-	toggleKnob.Size = UDim2.new(0, 18, 0, 18)
-	toggleKnob.Position = UDim2.new(0, 2, 0.5, -9)
+	toggleKnob.Size = UDim2.new(0, 20, 0, 20)
+	toggleKnob.Position = UDim2.new(0, 2, 0.5, -10)
 	toggleKnob.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 	toggleKnob.BorderSizePixel = 0
 	toggleKnob.Parent = toggleBg
 
 	self.ToggleKnob = toggleKnob
-	Utility:CreateCorner(toggleKnob, 9)
+	Utility:CreateCorner(toggleKnob, 10)
 
 	local knobInner = Instance.new("Frame")
 	knobInner.Name = "KnobInner"
-	knobInner.Size = UDim2.new(0, 10, 0, 10)
-	knobInner.Position = UDim2.new(0.5, -5, 0.5, -5)
+	knobInner.Size = UDim2.new(0, 8, 0, 8)
+	knobInner.Position = UDim2.new(0.5, -4, 0.5, -4)
 	knobInner.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	knobInner.BackgroundTransparency = 0
 	knobInner.BorderSizePixel = 0
 	knobInner.Parent = toggleKnob
-	Utility:CreateCorner(knobInner, 5)
+	Utility:CreateCorner(knobInner, 4)
 
 	self.KnobInner = knobInner
 
@@ -2767,21 +2629,16 @@ function Toggle:New(section, options)
 	end
 
 	mainFrame.MouseEnter:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.1
-		}, "Smooth", "Out", 0.15)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.08}, "Smooth", "Out", 0.15)
 	end)
 
 	mainFrame.MouseLeave:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 1
-		}, "Smooth", "Out", 0.2)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
 	end)
 
 	mainFrame.MouseButton1Click:Connect(function()
 		self:Toggle()
 		SoundManager:PlayToggle()
-		AnimationManager:RippleEffect(mainFrame, ThemeManager:GetColor("Accent"), 0.3)
 	end)
 
 	self._themeConnection = ThemeManager:OnChange(function(palette, animate)
@@ -2795,8 +2652,8 @@ function Toggle:SetState(state, instant)
 	state = state or false
 	self._value = state
 
-	local targetX = state and UDim2.new(1, -20, 0.5, -9) or UDim2.new(0, 2, 0.5, -9)
-	local bgColor = state and ThemeManager:GetColor("Accent") or ThemeManager:GetColor("Border")
+	local targetX = state and UDim2.new(1, -22, 0.5, -10) or UDim2.new(0, 2, 0.5, -10)
+	local bgColor = state and ThemeManager:GetColor("ToggleActive") or ThemeManager:GetColor("ToggleInactive")
 	local knobColor = state and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(200, 200, 200)
 
 	if instant then
@@ -2804,15 +2661,9 @@ function Toggle:SetState(state, instant)
 		self.ToggleBg.BackgroundColor3 = bgColor
 		self.ToggleKnob.BackgroundColor3 = knobColor
 	else
-		AnimationManager:CreateTween(self.ToggleKnob, {
-			Position = targetX
-		}, "Smooth", "Out", 0.25)
-		AnimationManager:CreateTween(self.ToggleBg, {
-			BackgroundColor3 = bgColor
-		}, "Smooth", "Out", 0.25)
-		AnimationManager:CreateTween(self.ToggleKnob, {
-			BackgroundColor3 = knobColor
-		}, "Smooth", "Out", 0.25)
+		AnimationManager:CreateTween(self.ToggleKnob, {Position = targetX}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ToggleBg, {BackgroundColor3 = bgColor}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ToggleKnob, {BackgroundColor3 = knobColor}, "Smooth", "Out", 0.3)
 	end
 end
 
@@ -2832,17 +2683,13 @@ end
 function Toggle:UpdateTheme(palette, animate)
 	if self._value then
 		if animate then
-			AnimationManager:CreateTween(self.ToggleBg, {
-				BackgroundColor3 = palette.Accent
-			}, "Smooth", "Out", 0.3)
+			AnimationManager:CreateTween(self.ToggleBg, {BackgroundColor3 = palette.ToggleActive}, "Smooth", "Out", 0.3)
 		else
-			self.ToggleBg.BackgroundColor3 = palette.Accent
+			self.ToggleBg.BackgroundColor3 = palette.ToggleActive
 		end
 	end
 	if animate then
-		AnimationManager:CreateTween(self.NameLabel, {
-			TextColor3 = palette.TextPrimary,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.NameLabel, {TextColor3 = palette.TextPrimary}, "Smooth", "Out", 0.3)
 	else
 		self.NameLabel.TextColor3 = palette.TextPrimary
 	end
@@ -2896,7 +2743,7 @@ function Slider:New(section, options)
 	local nameLabel = Instance.new("TextLabel")
 	nameLabel.Name = "Name"
 	nameLabel.Size = UDim2.new(1, -80, 0, 18)
-	nameLabel.Position = UDim2.new(0, 10, 0, 6)
+	nameLabel.Position = UDim2.new(0, 12, 0, 6)
 	nameLabel.BackgroundTransparency = 1
 	nameLabel.BorderSizePixel = 0
 	nameLabel.Text = self.Name
@@ -2911,7 +2758,7 @@ function Slider:New(section, options)
 	local valueLabel = Instance.new("TextLabel")
 	valueLabel.Name = "Value"
 	valueLabel.Size = UDim2.new(0, 70, 0, 18)
-	valueLabel.Position = UDim2.new(1, -80, 0, 6)
+	valueLabel.Position = UDim2.new(1, -82, 0, 6)
 	valueLabel.BackgroundTransparency = 1
 	valueLabel.BorderSizePixel = 0
 	valueLabel.Text = tostring(self._value) .. self.Suffix
@@ -2925,13 +2772,13 @@ function Slider:New(section, options)
 
 	local trackFrame = Instance.new("Frame")
 	trackFrame.Name = "Track"
-	trackFrame.Size = UDim2.new(1, -20, 0, 4)
-	trackFrame.Position = UDim2.new(0, 10, 1, -14)
-	trackFrame.BackgroundColor3 = ThemeManager:GetColor("Border")
+	trackFrame.Size = UDim2.new(1, -24, 0, 6)
+	trackFrame.Position = UDim2.new(0, 12, 1, -16)
+	trackFrame.BackgroundColor3 = ThemeManager:GetColor("ToggleInactive")
 	trackFrame.BorderSizePixel = 0
 	trackFrame.Parent = container
 	self.TrackFrame = trackFrame
-	Utility:CreateCorner(trackFrame, 2)
+	Utility:CreateCorner(trackFrame, 3)
 
 	local fillFrame = Instance.new("Frame")
 	fillFrame.Name = "Fill"
@@ -2940,37 +2787,26 @@ function Slider:New(section, options)
 	fillFrame.BorderSizePixel = 0
 	fillFrame.Parent = trackFrame
 	self.FillFrame = fillFrame
-	Utility:CreateCorner(fillFrame, 2)
-
-	local glowFrame = Instance.new("Frame")
-	glowFrame.Name = "Glow"
-	glowFrame.Size = UDim2.new(0, 0, 1, 4)
-	glowFrame.Position = UDim2.new(0, 0, 0.5, -2)
-	glowFrame.BackgroundColor3 = ThemeManager:GetColor("Accent")
-	glowFrame.BackgroundTransparency = 0.6
-	glowFrame.BorderSizePixel = 0
-	glowFrame.Parent = trackFrame
-	Utility:CreateCorner(glowFrame, 3)
-	self.GlowFrame = glowFrame
+	Utility:CreateCorner(fillFrame, 3)
 
 	local knob = Instance.new("Frame")
 	knob.Name = "Knob"
-	knob.Size = UDim2.new(0, 14, 0, 14)
-	knob.Position = UDim2.new(0, 0, 0.5, -7)
+	knob.Size = UDim2.new(0, 18, 0, 18)
+	knob.Position = UDim2.new(0, -9, 0.5, -9)
 	knob.BackgroundColor3 = ThemeManager:GetColor("Accent")
 	knob.BorderSizePixel = 0
-	knob.Parent = container
+	knob.Parent = trackFrame
 	self.Knob = knob
-	Utility:CreateCorner(knob, 7)
+	Utility:CreateCorner(knob, 9)
 
 	local knobInner = Instance.new("Frame")
 	knobInner.Name = "KnobInner"
-	knobInner.Size = UDim2.new(0, 6, 0, 6)
-	knobInner.Position = UDim2.new(0.5, -3, 0.5, -3)
+	knobInner.Size = UDim2.new(0, 8, 0, 8)
+	knobInner.Position = UDim2.new(0.5, -4, 0.5, -4)
 	knobInner.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	knobInner.BorderSizePixel = 0
 	knobInner.Parent = knob
-	Utility:CreateCorner(knobInner, 3)
+	Utility:CreateCorner(knobInner, 4)
 
 	local function updateSlider(inputX)
 		local trackPos = trackFrame.AbsolutePosition.X
@@ -2981,10 +2817,12 @@ function Slider:New(section, options)
 		local mult = 10 ^ self.Precision
 		value = math.floor(value * mult + 0.5) / mult
 		self._value = value
-		self:UpdateVisuals(relX, trackWidth)
+		self:UpdateVisuals(relX)
 		self.ValueLabel.Text = tostring(value) .. self.Suffix
 		pcall(self.Callback, value)
 	end
+
+	local inputService = game:GetService("UserInputService")
 
 	trackFrame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -2999,34 +2837,25 @@ function Slider:New(section, options)
 		end
 	end)
 
-	local inputChanged
-	inputChanged = game:GetService("UserInputService").InputChanged:Connect(function(input)
+	self._inputChanged = inputService.InputChanged:Connect(function(input)
 		if self._dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 			updateSlider(Mouse.X)
 		end
 	end)
 
-	local inputEnded
-	inputEnded = game:GetService("UserInputService").InputEnded:Connect(function(input)
+	self._inputEnded = inputService.InputEnded:Connect(function(input)
 		if self._dragging and (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
 			self._dragging = false
 		end
 	end)
 
-	self._inputChanged = inputChanged
-	self._inputEnded = inputEnded
-
 	knob.MouseEnter:Connect(function()
-		AnimationManager:CreateTween(knob, {
-			Size = UDim2.new(0, 18, 0, 18)
-		}, "Smooth", "Out", 0.15)
+		AnimationManager:CreateTween(knob, {Size = UDim2.new(0, 22, 0, 22)}, "Smooth", "Out", 0.15)
 	end)
 
 	knob.MouseLeave:Connect(function()
 		if not self._dragging then
-			AnimationManager:CreateTween(knob, {
-				Size = UDim2.new(0, 14, 0, 14)
-			}, "Smooth", "Out", 0.2)
+			AnimationManager:CreateTween(knob, {Size = UDim2.new(0, 18, 0, 18)}, "Smooth", "Out", 0.2)
 		end
 	end)
 
@@ -3039,21 +2868,15 @@ function Slider:New(section, options)
 	return self
 end
 
-function Slider:UpdateVisuals(relX, trackWidth)
-	trackWidth = trackWidth or self.TrackFrame.AbsoluteSize.X
+function Slider:UpdateVisuals(relX)
+	local trackWidth = self.TrackFrame.AbsoluteSize.X
+	if trackWidth == 0 then
+		trackWidth = self.TrackFrame.Size.X.Offset
+	end
 	relX = relX or (self._value - self.Min) / (self.Max - self.Min) * trackWidth
 
-	AnimationManager:CreateTween(self.FillFrame, {
-		Size = UDim2.new(0, relX, 1, 0)
-	}, "Smooth", "Out", 0.1)
-
-	AnimationManager:CreateTween(self.GlowFrame, {
-		Size = UDim2.new(0, relX, 1, 4)
-	}, "Smooth", "Out", 0.1)
-
-	AnimationManager:CreateTween(self.Knob, {
-		Position = UDim2.new(0, relX - 7, 0.5, -7)
-	}, "Smooth", "Out", 0.1)
+	AnimationManager:CreateTween(self.FillFrame, {Size = UDim2.new(0, relX, 1, 0)}, "Smooth", "Out", 0.1)
+	AnimationManager:CreateTween(self.Knob, {Position = UDim2.new(0, relX - 9, 0.5, -9)}, "Smooth", "Out", 0.1)
 end
 
 function Slider:SetValue(value, instant)
@@ -3067,10 +2890,9 @@ function Slider:SetValue(value, instant)
 
 	if instant then
 		self.FillFrame.Size = UDim2.new(0, relX, 1, 0)
-		self.GlowFrame.Size = UDim2.new(0, relX, 1, 4)
-		self.Knob.Position = UDim2.new(0, relX - 7, 0.5, -7)
+		self.Knob.Position = UDim2.new(0, relX - 9, 0.5, -9)
 	else
-		self:UpdateVisuals(relX, trackWidth)
+		self:UpdateVisuals(relX)
 	end
 
 	self.ValueLabel.Text = tostring(self._value) .. self.Suffix
@@ -3086,21 +2908,11 @@ end
 
 function Slider:UpdateTheme(palette, animate)
 	if animate then
-		AnimationManager:CreateTween(self.FillFrame, {
-			BackgroundColor3 = palette.Accent,
-		}, "Smooth", "Out", 0.3)
-		AnimationManager:CreateTween(self.GlowFrame, {
-			BackgroundColor3 = palette.Accent,
-		}, "Smooth", "Out", 0.3)
-		AnimationManager:CreateTween(self.Knob, {
-			BackgroundColor3 = palette.Accent,
-		}, "Smooth", "Out", 0.3)
-		AnimationManager:CreateTween(self.ValueLabel, {
-			TextColor3 = palette.Accent,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.FillFrame, {BackgroundColor3 = palette.Accent}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.Knob, {BackgroundColor3 = palette.Accent}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ValueLabel, {TextColor3 = palette.Accent}, "Smooth", "Out", 0.3)
 	else
 		self.FillFrame.BackgroundColor3 = palette.Accent
-		self.GlowFrame.BackgroundColor3 = palette.Accent
 		self.Knob.BackgroundColor3 = palette.Accent
 		self.ValueLabel.TextColor3 = palette.Accent
 	end

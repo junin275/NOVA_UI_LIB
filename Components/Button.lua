@@ -17,7 +17,6 @@ function Button:New(section, options)
 	self.Description = options.Description or nil
 	self.Icon = options.Icon or nil
 	self.Callback = options.Callback or function() end
-	self.Theme = options.Theme or "default"
 
 	local container = Instance.new("Frame")
 	container.Name = "Button_" .. self.Name
@@ -37,25 +36,26 @@ function Button:New(section, options)
 	mainFrame.Parent = container
 	self.MainFrame = mainFrame
 
-	Utility:CreateCorner(mainFrame, 6)
-	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.5, 1)
+	Utility:CreateCorner(mainFrame, 8)
+
+	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.6, 1)
 
 	local contentFrame = Instance.new("Frame")
 	contentFrame.Name = "Content"
-	contentFrame.Size = UDim2.new(1, -20, 1, 0)
-	contentFrame.Position = UDim2.new(0, 10, 0, 0)
+	contentFrame.Size = UDim2.new(1, -24, 1, 0)
+	contentFrame.Position = UDim2.new(0, 12, 0, 0)
 	contentFrame.BackgroundTransparency = 1
 	contentFrame.BorderSizePixel = 0
 	contentFrame.Parent = mainFrame
 
 	local layout = Instance.new("UIListLayout")
 	layout.FillDirection = Enum.FillDirection.Horizontal
-	layout.Padding = UDim.new(0, 8)
+	layout.Padding = UDim.new(0, 10)
 	layout.VerticalAlignment = Enum.VerticalAlignment.Center
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
 	layout.Parent = contentFrame
 
-	local iconLabel = nil
+	local iconLabel
 	if self.Icon then
 		iconLabel = IconManager:CreateIconLabel(contentFrame, self.Icon, UDim2.new(0, 18, 0, 18), ThemeManager:GetColor("TextSecondary"))
 		if iconLabel then
@@ -71,8 +71,6 @@ function Button:New(section, options)
 	textFrame.AutomaticSize = Enum.AutomaticSize.X
 	textFrame.LayoutOrder = 2
 	textFrame.Parent = contentFrame
-
-	self.TextFrame = textFrame
 
 	local nameLabel = Instance.new("TextLabel")
 	nameLabel.Name = "Name"
@@ -94,7 +92,7 @@ function Button:New(section, options)
 		local descLabel = Instance.new("TextLabel")
 		descLabel.Name = "Description"
 		descLabel.Size = UDim2.new(0, 0, 1, 0)
-		descLabel.Position = UDim2.new(1, 6, 0, 0)
+		descLabel.Position = UDim2.new(1, 8, 0, 0)
 		descLabel.BackgroundTransparency = 1
 		descLabel.BorderSizePixel = 0
 		descLabel.Text = self.Description
@@ -107,59 +105,29 @@ function Button:New(section, options)
 		descLabel.Parent = textFrame
 	end
 
-	local hoverGlow = Instance.new("Frame")
-	hoverGlow.Name = "HoverGlow"
-	hoverGlow.Size = UDim2.new(1, 0, 1, 0)
-	hoverGlow.BackgroundColor3 = ThemeManager:GetColor("Accent")
-	hoverGlow.BackgroundTransparency = 1
-	hoverGlow.BorderSizePixel = 0
-	hoverGlow.ZIndex = mainFrame.ZIndex - 1
-	hoverGlow.Parent = container
-
-	Utility:CreateCorner(hoverGlow, 6)
-
 	mainFrame.MouseEnter:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.1
-		}, "Smooth", "Out", 0.15)
-		AnimationManager:CreateTween(hoverGlow, {
-			BackgroundTransparency = 0.92
-		}, "Smooth", "Out", 0.2)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.08}, "Smooth", "Out", 0.15)
 		SoundManager:PlayHover()
 	end)
 
 	mainFrame.MouseLeave:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 1
-		}, "Smooth", "Out", 0.2)
-		AnimationManager:CreateTween(hoverGlow, {
-			BackgroundTransparency = 1
-		}, "Smooth", "Out", 0.25)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
 	end)
 
 	mainFrame.MouseButton1Down:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.2
-		}, "Sharp", "In", 0.08)
-		AnimationManager:CreateTween(container, {
-			Size = UDim2.new(1, 0, 0, 34)
-		}, "Sharp", "In", 0.08)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.15}, "Sharp", "In", 0.08)
+		AnimationManager:CreateTween(container, {Size = UDim2.new(1, 0, 0, 34)}, "Sharp", "In", 0.08)
 	end)
 
 	mainFrame.MouseButton1Up:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.1
-		}, "Elastic", "Out", 0.3)
-		AnimationManager:CreateTween(container, {
-			Size = UDim2.new(1, 0, 0, 36)
-		}, "Elastic", "Out", 0.3)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.08}, "Elastic", "Out", 0.3)
+		AnimationManager:CreateTween(container, {Size = UDim2.new(1, 0, 0, 36)}, "Elastic", "Out", 0.3)
 	end)
 
 	mainFrame.MouseButton1Click:Connect(function()
 		SoundManager:PlayClick()
-		AnimationManager:RippleEffect(mainFrame, ThemeManager:GetColor("Accent"), 0.4)
-		local success, err = pcall(self.Callback)
-		if not success then
+		local ok, err = pcall(self.Callback)
+		if not ok then
 			warn("Button callback error:", err)
 		end
 	end)
@@ -182,9 +150,7 @@ end
 
 function Button:UpdateTheme(palette, animate)
 	if animate then
-		AnimationManager:CreateTween(self.NameLabel, {
-			TextColor3 = palette.TextPrimary,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.NameLabel, {TextColor3 = palette.TextPrimary}, "Smooth", "Out", 0.3)
 	else
 		self.NameLabel.TextColor3 = palette.TextPrimary
 	end

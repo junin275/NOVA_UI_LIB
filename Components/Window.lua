@@ -7,6 +7,7 @@ local Mouse = Player and Player:GetMouse()
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
 
 local ThemeManager = require(script.Parent.Parent.Core.ThemeManager)
 local AnimationManager = require(script.Parent.Parent.Core.AnimationManager)
@@ -46,19 +47,29 @@ function Window:New(options)
 	self.ScreenGui = screenGui
 	self.Options = options
 	self.Title = options.Title or "Nova UI"
-	self.Size = options.Size or UDim2.new(0, 640, 0, 440)
-	self.Position = options.Position or UDim2.new(0.5, -320, 0.5, -220)
-	self.MinSize = options.MinSize or Vector2.new(360, 280)
+	self.Size = options.Size or UDim2.new(0, 680, 0, 480)
+	self.Position = options.Position or UDim2.new(0.5, -340, 0.5, -240)
+	self.MinSize = options.MinSize or Vector2.new(400, 320)
 	self.Theme = options.Theme or "Default"
 	self.Icon = options.Icon or nil
 	self.Resizable = options.Resizable or false
 	self.ShowFPS = options.ShowFPS or false
+	self.SidebarWidth = options.SidebarWidth or 50
 	self._minimized = false
 	self._maximized = false
 	self._previousSize = nil
 	self._previousPosition = nil
 	self.Tabs = {}
 	self._currentTab = nil
+
+	local modalBackdrop = Instance.new("Frame")
+	modalBackdrop.Name = "ModalBackdrop"
+	modalBackdrop.Size = UDim2.new(1, 0, 1, 0)
+	modalBackdrop.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	modalBackdrop.BackgroundTransparency = 1
+	modalBackdrop.BorderSizePixel = 0
+	modalBackdrop.ZIndex = 0
+	modalBackdrop.Parent = screenGui
 
 	local mainFrame = Instance.new("Frame")
 	mainFrame.Name = "MainWindow"
@@ -69,78 +80,68 @@ function Window:New(options)
 	mainFrame.ClipsDescendants = true
 	mainFrame.Parent = screenGui
 
+	AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0}, "Smooth", "Out", 0.4)
+
 	self.MainFrame = mainFrame
 
-	Utility:CreateCorner(mainFrame, 10)
+	Utility:CreateCorner(mainFrame, 12)
 
-	local outerGlow = Instance.new("ImageLabel")
-	outerGlow.Name = "OuterGlow"
-	outerGlow.BackgroundTransparency = 1
-	outerGlow.BorderSizePixel = 0
-	outerGlow.Size = UDim2.new(1, 40, 1, 40)
-	outerGlow.Position = UDim2.new(-0.5, -20, -0.5, -20)
-	outerGlow.ZIndex = mainFrame.ZIndex - 1
-	outerGlow.Image = "rbxassetid://1316045217"
-	outerGlow.ImageColor3 = Color3.fromRGB(0, 0, 0)
-	outerGlow.ImageTransparency = 0.85
-	outerGlow.ScaleType = Enum.ScaleType.Slice
-	outerGlow.SliceCenter = Rect.new(10, 10, 118, 118)
-	outerGlow.Parent = mainFrame
+	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.5, 1)
 
-	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.4, 1)
+	local shadowFrame = Instance.new("ImageLabel")
+	shadowFrame.Name = "Shadow"
+	shadowFrame.BackgroundTransparency = 1
+	shadowFrame.BorderSizePixel = 0
+	shadowFrame.Size = UDim2.new(1, 60, 1, 60)
+	shadowFrame.Position = UDim2.new(-0.5, -30, -0.5, -30)
+	shadowFrame.ZIndex = mainFrame.ZIndex - 2
+	shadowFrame.Image = "rbxassetid://1316045217"
+	shadowFrame.ImageColor3 = Color3.fromRGB(0, 0, 0)
+	shadowFrame.ImageTransparency = 0.78
+	shadowFrame.ScaleType = Enum.ScaleType.Slice
+	shadowFrame.SliceCenter = Rect.new(10, 10, 118, 118)
+	shadowFrame.Parent = mainFrame
 
 	local titleBar = Instance.new("Frame")
 	titleBar.Name = "TitleBar"
-	titleBar.Size = UDim2.new(1, 0, 0, 42)
+	titleBar.Size = UDim2.new(1, 0, 0, 44)
 	titleBar.Position = UDim2.new(0, 0, 0, 0)
 	titleBar.BackgroundColor3 = ThemeManager:GetColor("SurfaceAlt")
 	titleBar.BorderSizePixel = 0
 	titleBar.Parent = mainFrame
 
-	Utility:CreateCorner(titleBar, 10)
+	Utility:CreateCorner(titleBar, 12)
 	Utility:CreateStroke(titleBar, ThemeManager:GetColor("Border"), 0.3, 1)
 
-	local titleBarBottom = Instance.new("Frame")
-	titleBarBottom.Name = "TitleBarBottom"
-	titleBarBottom.Size = UDim2.new(1, 0, 0, 0)
-	titleBarBottom.Position = UDim2.new(0, 0, 1, 0)
-	titleBarBottom.BackgroundColor3 = ThemeManager:GetColor("Border")
-	titleBarBottom.BorderSizePixel = 0
-	titleBarBottom.Parent = titleBar
+	local titleBarFill = Instance.new("Frame")
+	titleBarFill.Name = "TitleBarFill"
+	titleBarFill.Size = UDim2.new(0, 0, 0, 1)
+	titleBarFill.Position = UDim2.new(0, 0, 1, 0)
+	titleBarFill.BackgroundColor3 = ThemeManager:GetColor("Divider")
+	titleBarFill.BorderSizePixel = 0
+	titleBarFill.Parent = titleBar
 
 	self.TitleBar = titleBar
-	self._titleBarBottom = titleBarBottom
 
-	local accentLine = Instance.new("Frame")
-	accentLine.Name = "AccentLine"
-	accentLine.Size = UDim2.new(0, 0, 0, 2)
-	accentLine.Position = UDim2.new(0, 0, 1, -2)
-	accentLine.BackgroundColor3 = ThemeManager:GetColor("Accent")
-	accentLine.BorderSizePixel = 0
-	accentLine.Parent = titleBar
-
-	AnimationManager:CreateTween(accentLine, {Size = UDim2.new(1, 0, 0, 2)}, "Soft", "Out", 0.6)
-
-	local iconLabel = nil
+	local iconLabel
 	if self.Icon then
-		iconLabel = IconManager:CreateIconLabel(titleBar, self.Icon, UDim2.new(0, 18, 0, 18), ThemeManager:GetColor("TextPrimary"))
+		iconLabel = IconManager:CreateIconLabel(titleBar, self.Icon, UDim2.new(0, 20, 0, 20), ThemeManager:GetColor("Accent"))
 		if iconLabel then
-			iconLabel.Position = UDim2.new(0, 14, 0.5, -9)
+			iconLabel.Position = UDim2.new(0, 14, 0.5, -10)
 			iconLabel.ZIndex = titleBar.ZIndex + 1
 		end
 	end
 
 	local titleLabel = Instance.new("TextLabel")
 	titleLabel.Name = "Title"
-	titleLabel.Size = UDim2.new(1, -80, 1, 0)
-	titleLabel.Position = UDim2.new(0, iconLabel and 40 or 16, 0, 0)
+	titleLabel.Size = UDim2.new(1, -100, 1, 0)
+	titleLabel.Position = UDim2.new(0, iconLabel and 44 or 16, 0, 0)
 	titleLabel.BackgroundTransparency = 1
 	titleLabel.BorderSizePixel = 0
 	titleLabel.Text = self.Title
 	titleLabel.Font = Enum.Font.GothamSemibold
 	titleLabel.TextSize = 15
 	titleLabel.TextColor3 = ThemeManager:GetColor("TextPrimary")
-	titleLabel.TextTransparency = 0.1
 	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 	titleLabel.TextYAlignment = Enum.TextYAlignment.Center
 	titleLabel.Parent = titleBar
@@ -149,128 +150,156 @@ function Window:New(options)
 
 	local windowButtons = Instance.new("Frame")
 	windowButtons.Name = "WindowButtons"
-	windowButtons.Size = UDim2.new(0, 90, 0, 24)
-	windowButtons.Position = UDim2.new(1, -100, 0.5, -12)
+	windowButtons.Size = UDim2.new(0, 90, 0, 26)
+	windowButtons.Position = UDim2.new(1, -104, 0.5, -13)
 	windowButtons.BackgroundTransparency = 1
 	windowButtons.BorderSizePixel = 0
 	windowButtons.Parent = titleBar
 
-	local function createWindowButton(iconName, order)
+	local buttonColors = {
+		{idle = Color3.fromRGB(255, 100, 89), hover = Color3.fromRGB(255, 80, 70)},
+		{idle = Color3.fromRGB(255, 190, 50), hover = Color3.fromRGB(240, 170, 40)},
+		{idle = Color3.fromRGB(60, 200, 80), hover = Color3.fromRGB(50, 180, 70)},
+	}
+
+	local function createMacButton(colorSet, order)
 		local btn = Instance.new("TextButton")
-		btn.Name = iconName .. "Button"
-		btn.Size = UDim2.new(0, 24, 0, 24)
-		btn.Position = UDim2.new(0, (order - 1) * 28, 0, 0)
-		btn.BackgroundColor3 = ThemeManager:GetColor("Surface")
-		btn.BackgroundTransparency = 1
+		btn.Name = "MacButton" .. order
+		btn.Size = UDim2.new(0, 14, 0, 14)
+		btn.Position = UDim2.new(0, (order - 1) * 22, 0.5, -7)
+		btn.BackgroundColor3 = colorSet.idle
 		btn.BorderSizePixel = 0
 		btn.Text = ""
+		btn.AutoButtonColor = false
 		btn.ZIndex = titleBar.ZIndex + 2
 		btn.Parent = windowButtons
 
-		local icon = IconManager:CreateIconLabel(btn, iconName, UDim2.new(0, 14, 0, 14), ThemeManager:GetColor("TextSecondary"))
-		if icon then
-			icon.Position = UDim2.new(0.5, -7, 0.5, -7)
-			icon.ZIndex = btn.ZIndex + 1
-		end
+		Utility:CreateCorner(btn, 7)
 
 		btn.MouseEnter:Connect(function()
-			AnimationManager:CreateTween(btn, {BackgroundTransparency = 0.7}, "Smooth", "Out", 0.15)
-			if icon then
-				AnimationManager:CreateTween(icon, {ImageColor3 = ThemeManager:GetColor("TextPrimary")}, "Smooth", "Out", 0.15)
-			end
+			AnimationManager:CreateTween(btn, {BackgroundColor3 = colorSet.hover}, "Smooth", "Out", 0.1)
 		end)
 
 		btn.MouseLeave:Connect(function()
-			AnimationManager:CreateTween(btn, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
-			if icon then
-				AnimationManager:CreateTween(icon, {ImageColor3 = ThemeManager:GetColor("TextSecondary")}, "Smooth", "Out", 0.2)
-			end
+			AnimationManager:CreateTween(btn, {BackgroundColor3 = colorSet.idle}, "Smooth", "Out", 0.2)
 		end)
 
-		btn.MouseButton1Click:Connect(function()
-			SoundManager:PlayClick()
-			AnimationManager:RippleEffect(btn, ThemeManager:GetColor("Accent"), 0.3)
-		end)
-
-		return btn, icon
+		return btn
 	end
 
-	local minimizeBtn, minimizeIcon = createWindowButton("Minus", 1)
-	local maximizeBtn, maximizeIcon = createWindowButton("Square", 2)
-	local closeBtn, closeIcon = createWindowButton("Close", 3)
+	local closeBtn = createMacButton(buttonColors[1], 1)
+	closeBtn.MouseButton1Click:Connect(function() self:Close() end)
 
-	minimizeBtn.MouseButton1Click:Connect(function()
-		self:Minimize()
-	end)
+	local minimizeBtn = createMacButton(buttonColors[2], 2)
+	minimizeBtn.MouseButton1Click:Connect(function() self:Minimize() end)
 
-	maximizeBtn.MouseButton1Click:Connect(function()
-		self:ToggleMaximize()
-	end)
+	local maximizeBtn = createMacButton(buttonColors[3], 3)
+	maximizeBtn.MouseButton1Click:Connect(function() self:ToggleMaximize() end)
 
-	closeBtn.MouseButton1Click:Connect(function()
-		self:Close()
-	end)
+	local bodyFrame = Instance.new("Frame")
+	bodyFrame.Name = "Body"
+	bodyFrame.Size = UDim2.new(1, 0, 1, -44)
+	bodyFrame.Position = UDim2.new(0, 0, 0, 44)
+	bodyFrame.BackgroundTransparency = 1
+	bodyFrame.BorderSizePixel = 0
+	bodyFrame.Parent = mainFrame
 
-	local tabContainer = Instance.new("Frame")
-	tabContainer.Name = "TabContainer"
-	tabContainer.Size = UDim2.new(1, 0, 0, 38)
-	tabContainer.Position = UDim2.new(0, 0, 0, 42)
-	tabContainer.BackgroundColor3 = ThemeManager:GetColor("Background")
-	tabContainer.BorderSizePixel = 0
-	tabContainer.Parent = mainFrame
+	local sidebar = Instance.new("Frame")
+	sidebar.Name = "Sidebar"
+	sidebar.Size = UDim2.new(0, self.SidebarWidth, 1, 0)
+	sidebar.Position = UDim2.new(0, 0, 0, 0)
+	sidebar.BackgroundColor3 = ThemeManager:GetColor("SurfaceAlt")
+	sidebar.BorderSizePixel = 0
+	sidebar.Parent = bodyFrame
 
-	self.TabContainer = tabContainer
+	self.Sidebar = sidebar
 
-	Utility:CreateStroke(tabContainer, ThemeManager:GetColor("Border"), 0.5, 1)
+	local sidebarDivider = Instance.new("Frame")
+	sidebarDivider.Name = "SidebarDivider"
+	sidebarDivider.Size = UDim2.new(0, 1, 1, 0)
+	sidebarDivider.Position = UDim2.new(1, 0, 0, 0)
+	sidebarDivider.BackgroundColor3 = ThemeManager:GetColor("Divider")
+	sidebarDivider.BorderSizePixel = 0
+	sidebarDivider.Parent = sidebar
+
+	local sidebarLayout = Instance.new("UIListLayout")
+	sidebarLayout.FillDirection = Enum.FillDirection.Vertical
+	sidebarLayout.Padding = UDim.new(0, 2)
+	sidebarLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	sidebarLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	sidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	sidebarLayout.Parent = sidebar
+
+	local sidebarPadding = Instance.new("UIPadding")
+	sidebarPadding.PaddingTop = UDim.new(0, 8)
+	sidebarPadding.PaddingBottom = UDim.new(0, 8)
+	sidebarPadding.Parent = sidebar
 
 	local tabIndicator = Instance.new("Frame")
 	tabIndicator.Name = "TabIndicator"
-	tabIndicator.Size = UDim2.new(0, 0, 0, 2)
-	tabIndicator.Position = UDim2.new(0, 0, 1, -2)
+	tabIndicator.Size = UDim2.new(0, 3, 0, 0)
+	tabIndicator.Position = UDim2.new(0, 0, 0, 0)
 	tabIndicator.BackgroundColor3 = ThemeManager:GetColor("Accent")
 	tabIndicator.BorderSizePixel = 0
-	tabIndicator.Parent = tabContainer
+	tabIndicator.Parent = sidebar
 
 	self.TabIndicator = tabIndicator
 
-	local contentArea = Instance.new("Frame")
+	local contentArea = Instance.new("ScrollingFrame")
 	contentArea.Name = "ContentArea"
-	contentArea.Size = UDim2.new(1, 0, 1, -(42 + 38))
-	contentArea.Position = UDim2.new(0, 0, 0, 42 + 38)
+	contentArea.Size = UDim2.new(1, -(self.SidebarWidth + 1), 1, 0)
+	contentArea.Position = UDim2.new(0, self.SidebarWidth + 1, 0, 0)
 	contentArea.BackgroundColor3 = ThemeManager:GetColor("Background")
 	contentArea.BorderSizePixel = 0
-	contentArea.Parent = mainFrame
+	contentArea.ScrollBarThickness = 3
+	contentArea.ScrollBarImageColor3 = ThemeManager:GetColor("ScrollBar")
+	contentArea.ScrollBarImageTransparency = 0.6
+	contentArea.CanvasSize = UDim2.new(0, 0, 0, 0)
+	contentArea.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	contentArea.ScrollingDirection = Enum.ScrollingDirection.Y
+	contentArea.ElasticBehavior = Enum.ElasticBehavior.Never
+	contentArea.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Right
+	contentArea.Parent = bodyFrame
 
 	self.ContentArea = contentArea
+
+	local contentPadding = Instance.new("UIPadding")
+	contentPadding.PaddingTop = UDim.new(0, 16)
+	contentPadding.PaddingBottom = UDim.new(0, 16)
+	contentPadding.PaddingLeft = UDim.new(0, 18)
+	contentPadding.PaddingRight = UDim.new(0, 18)
+	contentPadding.Parent = contentArea
+
+	local contentLayout = Instance.new("UIListLayout")
+	contentLayout.FillDirection = Enum.FillDirection.Vertical
+	contentLayout.Padding = UDim.new(0, 10)
+	contentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+	contentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	contentLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	contentLayout.Parent = contentArea
+
+	self._contentLayout = contentLayout
+
+	contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+		local size = contentLayout.AbsoluteContentSize
+		contentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
+	end)
 
 	DragService:MakeDraggable(mainFrame, titleBar, {
 		ConstrainToScreen = true,
 		SmoothDrag = true,
-		OnDragStart = function()
-			AnimationManager:CreateTween(mainFrame, {
-				BackgroundTransparency = 0.05
-			}, "Smooth", "Out", 0.1)
-		end,
-		OnDragEnd = function()
-			AnimationManager:CreateTween(mainFrame, {
-				BackgroundTransparency = 0
-			}, "Smooth", "Out", 0.2)
-		end,
 	})
 
-	if self.Resizable then
-		DragService:MakeResizable(mainFrame, {MinSize = self.MinSize})
-	end
+	DragService:MakeResizable(mainFrame, {
+		MinSize = self.MinSize,
+		Enabled = self.Resizable,
+	})
 
 	self._themeConnection = ThemeManager:OnChange(function(palette, animate)
 		self:UpdateTheme(palette, animate)
 	end)
 
 	table.insert(Windows, self)
-
-	AnimationManager:CreateTween(mainFrame, {
-		BackgroundTransparency = 0,
-	}, "Smooth", "Out", 0.4)
 
 	return self
 end
@@ -284,8 +313,6 @@ function Window:CreateTab(options)
 	if #self.Tabs == 1 then
 		self:SelectTab(tab)
 	end
-
-	self:UpdateTabLayout()
 
 	return tab
 end
@@ -308,27 +335,19 @@ function Window:SelectTab(tab)
 
 	local tabButton = tab.TabButton
 	if tabButton then
-		local targetX = tabButton.AbsolutePosition.X - self.TabContainer.AbsolutePosition.X
-		local targetWidth = tabButton.AbsoluteSize.X
+		local targetY = tabButton.AbsolutePosition.Y - self.Sidebar.AbsolutePosition.Y
+		local targetHeight = tabButton.AbsoluteSize.Y
+
 		AnimationManager:CreateTween(self.TabIndicator, {
-			Position = UDim2.new(0, targetX, 1, -2),
-			Size = UDim2.new(0, targetWidth, 0, 2)
+			Position = UDim2.new(0, 0, 0, targetY),
+			Size = UDim2.new(0, 3, 0, targetHeight)
 		}, "Smooth", "Out", 0.35)
 	end
 
 	SoundManager:PlayTabSwitch()
 
-	tab:UpdateContentSize()
-end
-
-function Window:UpdateTabLayout()
-	local xOffset = 0
-	for i, tab in ipairs(self.Tabs) do
-		if tab.TabButton then
-			tab.TabButton.Position = UDim2.new(0, xOffset, 0, 0)
-			xOffset = xOffset + tab.TabButton.AbsoluteSize.X + 2
-		end
-	end
+	local size = self._contentLayout.AbsoluteContentSize
+	self.ContentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
 end
 
 function Window:Minimize()
@@ -336,23 +355,21 @@ function Window:Minimize()
 	if self._minimized then
 		self._previousSize = self.MainFrame.Size
 		AnimationManager:CreateTween(self.MainFrame, {
-			Size = UDim2.new(0, self.MainFrame.AbsoluteSize.X, 0, 42)
+			Size = UDim2.new(0, self.MainFrame.AbsoluteSize.X, 0, 44)
 		}, "Smooth", "Out", 0.3)
 		AnimationManager:CreateTween(self.ContentArea, {
-			Size = UDim2.new(1, 0, 0, 0)
+			Size = UDim2.new(1, -(self.SidebarWidth + 1), 0, 0)
 		}, "Smooth", "Out", 0.25)
-		AnimationManager:CreateTween(self.TabContainer, {
-			Size = UDim2.new(1, 0, 0, 0)
-		}, "Smooth", "Out", 0.25)
+		local tabArea = self.MainFrame:FindFirstChild("Body")
+		if tabArea then
+			tabArea.Size = UDim2.new(1, 0, 0, 0)
+		end
 	else
 		AnimationManager:CreateTween(self.MainFrame, {
 			Size = self._previousSize or self.Size
-		}, "Smooth", "Out", 0.35)
-		AnimationManager:CreateTween(self.ContentArea, {
-			Size = UDim2.new(1, 0, 1, -(42 + 38))
-		}, "Smooth", "Out", 0.3)
-		AnimationManager:CreateTween(self.TabContainer, {
-			Size = UDim2.new(1, 0, 0, 38)
+		}, "Smooth", "Out", 0.4)
+		AnimationManager:CreateTween(self.MainFrame:FindFirstChild("Body"), {
+			Size = UDim2.new(1, 0, 1, -44)
 		}, "Smooth", "Out", 0.3)
 	end
 end
@@ -363,7 +380,7 @@ function Window:ToggleMaximize()
 		AnimationManager:CreateTween(self.MainFrame, {
 			Size = self._previousSize or self.Size,
 			Position = self._previousPosition or self.Position
-		}, "Smooth", "Out", 0.35)
+		}, "Smooth", "Out", 0.4)
 	else
 		self._maximized = true
 		self._previousSize = self.MainFrame.Size
@@ -372,7 +389,7 @@ function Window:ToggleMaximize()
 		AnimationManager:CreateTween(self.MainFrame, {
 			Size = UDim2.new(0, screenSize.X, 0, screenSize.Y),
 			Position = UDim2.new(0, 0, 0, 0)
-		}, "Smooth", "Out", 0.35)
+		}, "Smooth", "Out", 0.4)
 	end
 end
 
@@ -410,46 +427,26 @@ function Window:Destroy()
 end
 
 function Window:UpdateTheme(palette, animate)
-	animate = animate and true
-
 	if animate then
-		AnimationManager:CreateTween(self.MainFrame, {
-			BackgroundColor3 = palette.Surface,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.TitleBar, {
-			BackgroundColor3 = palette.SurfaceAlt,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.TabContainer, {
-			BackgroundColor3 = palette.Background,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.ContentArea, {
-			BackgroundColor3 = palette.Background,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self._titleBarBottom, {
-			BackgroundColor3 = palette.Border,
-		}, "Smooth", "Out", 0.3)
-
-		AnimationManager:CreateTween(self.TabIndicator, {
-			BackgroundColor3 = palette.Accent,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.MainFrame, {BackgroundColor3 = palette.Surface}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.TitleBar, {BackgroundColor3 = palette.SurfaceAlt}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.Sidebar, {BackgroundColor3 = palette.SurfaceAlt}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ContentArea, {BackgroundColor3 = palette.Background}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.TabIndicator, {BackgroundColor3 = palette.Accent}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.TitleLabel, {TextColor3 = palette.TextPrimary}, "Smooth", "Out", 0.3)
 	else
 		self.MainFrame.BackgroundColor3 = palette.Surface
 		self.TitleBar.BackgroundColor3 = palette.SurfaceAlt
-		self.TabContainer.BackgroundColor3 = palette.Background
+		self.Sidebar.BackgroundColor3 = palette.SurfaceAlt
 		self.ContentArea.BackgroundColor3 = palette.Background
-		self._titleBarBottom.BackgroundColor3 = palette.Border
 		self.TabIndicator.BackgroundColor3 = palette.Accent
+		self.TitleLabel.TextColor3 = palette.TextPrimary
 	end
 end
 
 function Window:UpdateContentSize()
-	if self._currentTab then
-		self._currentTab:UpdateContentSize()
-	end
+	local size = self._contentLayout.AbsoluteContentSize
+	self.ContentArea.CanvasSize = UDim2.new(0, 0, 0, size.Y + 32)
 end
 
 function Window:GetWindows()

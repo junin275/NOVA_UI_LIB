@@ -35,13 +35,13 @@ function Toggle:New(section, options)
 	mainFrame.Parent = container
 	self.MainFrame = mainFrame
 
-	Utility:CreateCorner(mainFrame, 6)
-	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.5, 1)
+	Utility:CreateCorner(mainFrame, 8)
+	Utility:CreateStroke(mainFrame, ThemeManager:GetColor("Border"), 0.6, 1)
 
 	local textFrame = Instance.new("Frame")
 	textFrame.Name = "TextFrame"
-	textFrame.Size = UDim2.new(1, -60, 1, 0)
-	textFrame.Position = UDim2.new(0, 10, 0, 0)
+	textFrame.Size = UDim2.new(1, -64, 1, 0)
+	textFrame.Position = UDim2.new(0, 12, 0, 0)
 	textFrame.BackgroundTransparency = 1
 	textFrame.BorderSizePixel = 0
 	textFrame.Parent = mainFrame
@@ -58,7 +58,6 @@ function Toggle:New(section, options)
 	nameLabel.TextXAlignment = Enum.TextXAlignment.Left
 	nameLabel.TextYAlignment = Enum.TextYAlignment.Center
 	nameLabel.Parent = textFrame
-
 	self.NameLabel = nameLabel
 
 	if self.Description then
@@ -80,35 +79,35 @@ function Toggle:New(section, options)
 
 	local toggleBg = Instance.new("Frame")
 	toggleBg.Name = "ToggleBg"
-	toggleBg.Size = UDim2.new(0, 44, 0, 22)
-	toggleBg.Position = UDim2.new(1, -54, 0.5, -11)
-	toggleBg.BackgroundColor3 = ThemeManager:GetColor("Border")
+	toggleBg.Size = UDim2.new(0, 44, 0, 24)
+	toggleBg.Position = UDim2.new(1, -56, 0.5, -12)
+	toggleBg.BackgroundColor3 = ThemeManager:GetColor("ToggleInactive")
 	toggleBg.BorderSizePixel = 0
 	toggleBg.Parent = mainFrame
 
 	self.ToggleBg = toggleBg
-	Utility:CreateCorner(toggleBg, 11)
+	Utility:CreateCorner(toggleBg, 12)
 
 	local toggleKnob = Instance.new("Frame")
 	toggleKnob.Name = "Knob"
-	toggleKnob.Size = UDim2.new(0, 18, 0, 18)
-	toggleKnob.Position = UDim2.new(0, 2, 0.5, -9)
+	toggleKnob.Size = UDim2.new(0, 20, 0, 20)
+	toggleKnob.Position = UDim2.new(0, 2, 0.5, -10)
 	toggleKnob.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 	toggleKnob.BorderSizePixel = 0
 	toggleKnob.Parent = toggleBg
 
 	self.ToggleKnob = toggleKnob
-	Utility:CreateCorner(toggleKnob, 9)
+	Utility:CreateCorner(toggleKnob, 10)
 
 	local knobInner = Instance.new("Frame")
 	knobInner.Name = "KnobInner"
-	knobInner.Size = UDim2.new(0, 10, 0, 10)
-	knobInner.Position = UDim2.new(0.5, -5, 0.5, -5)
+	knobInner.Size = UDim2.new(0, 8, 0, 8)
+	knobInner.Position = UDim2.new(0.5, -4, 0.5, -4)
 	knobInner.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	knobInner.BackgroundTransparency = 0
 	knobInner.BorderSizePixel = 0
 	knobInner.Parent = toggleKnob
-	Utility:CreateCorner(knobInner, 5)
+	Utility:CreateCorner(knobInner, 4)
 
 	self.KnobInner = knobInner
 
@@ -117,21 +116,16 @@ function Toggle:New(section, options)
 	end
 
 	mainFrame.MouseEnter:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 0.1
-		}, "Smooth", "Out", 0.15)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 0.08}, "Smooth", "Out", 0.15)
 	end)
 
 	mainFrame.MouseLeave:Connect(function()
-		AnimationManager:CreateTween(mainFrame, {
-			BackgroundTransparency = 1
-		}, "Smooth", "Out", 0.2)
+		AnimationManager:CreateTween(mainFrame, {BackgroundTransparency = 1}, "Smooth", "Out", 0.2)
 	end)
 
 	mainFrame.MouseButton1Click:Connect(function()
 		self:Toggle()
 		SoundManager:PlayToggle()
-		AnimationManager:RippleEffect(mainFrame, ThemeManager:GetColor("Accent"), 0.3)
 	end)
 
 	self._themeConnection = ThemeManager:OnChange(function(palette, animate)
@@ -145,8 +139,8 @@ function Toggle:SetState(state, instant)
 	state = state or false
 	self._value = state
 
-	local targetX = state and UDim2.new(1, -20, 0.5, -9) or UDim2.new(0, 2, 0.5, -9)
-	local bgColor = state and ThemeManager:GetColor("Accent") or ThemeManager:GetColor("Border")
+	local targetX = state and UDim2.new(1, -22, 0.5, -10) or UDim2.new(0, 2, 0.5, -10)
+	local bgColor = state and ThemeManager:GetColor("ToggleActive") or ThemeManager:GetColor("ToggleInactive")
 	local knobColor = state and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(200, 200, 200)
 
 	if instant then
@@ -154,15 +148,9 @@ function Toggle:SetState(state, instant)
 		self.ToggleBg.BackgroundColor3 = bgColor
 		self.ToggleKnob.BackgroundColor3 = knobColor
 	else
-		AnimationManager:CreateTween(self.ToggleKnob, {
-			Position = targetX
-		}, "Smooth", "Out", 0.25)
-		AnimationManager:CreateTween(self.ToggleBg, {
-			BackgroundColor3 = bgColor
-		}, "Smooth", "Out", 0.25)
-		AnimationManager:CreateTween(self.ToggleKnob, {
-			BackgroundColor3 = knobColor
-		}, "Smooth", "Out", 0.25)
+		AnimationManager:CreateTween(self.ToggleKnob, {Position = targetX}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ToggleBg, {BackgroundColor3 = bgColor}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.ToggleKnob, {BackgroundColor3 = knobColor}, "Smooth", "Out", 0.3)
 	end
 end
 
@@ -182,17 +170,13 @@ end
 function Toggle:UpdateTheme(palette, animate)
 	if self._value then
 		if animate then
-			AnimationManager:CreateTween(self.ToggleBg, {
-				BackgroundColor3 = palette.Accent
-			}, "Smooth", "Out", 0.3)
+			AnimationManager:CreateTween(self.ToggleBg, {BackgroundColor3 = palette.ToggleActive}, "Smooth", "Out", 0.3)
 		else
-			self.ToggleBg.BackgroundColor3 = palette.Accent
+			self.ToggleBg.BackgroundColor3 = palette.ToggleActive
 		end
 	end
 	if animate then
-		AnimationManager:CreateTween(self.NameLabel, {
-			TextColor3 = palette.TextPrimary,
-		}, "Smooth", "Out", 0.3)
+		AnimationManager:CreateTween(self.NameLabel, {TextColor3 = palette.TextPrimary}, "Smooth", "Out", 0.3)
 	else
 		self.NameLabel.TextColor3 = palette.TextPrimary
 	end
